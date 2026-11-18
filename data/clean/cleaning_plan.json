@@ -1,0 +1,99 @@
+{
+  "column_actions": [
+    {
+      "raw_column": "data",
+      "action": "rename",
+      "new_name": "data",
+      "reason": "Manter coluna de referência temporal."
+    },
+    {
+      "raw_column": "distrito",
+      "action": "rename",
+      "new_name": "distrito",
+      "reason": "Identificação geográfica de distrito."
+    },
+    {
+      "raw_column": "coddistrito",
+      "action": "rename",
+      "new_name": "cod_distrito",
+      "reason": "Normalização do nome da coluna."
+    },
+    {
+      "raw_column": "concelho",
+      "action": "rename",
+      "new_name": "concelho",
+      "reason": "Identificação geográfica de concelho."
+    },
+    {
+      "raw_column": "coddistritoconcelho",
+      "action": "rename",
+      "new_name": "cod_concelho",
+      "reason": "Normalização do nome da coluna."
+    },
+    {
+      "raw_column": "freguesia",
+      "action": "rename",
+      "new_name": "freguesia",
+      "reason": "Identificação geográfica de freguesia."
+    },
+    {
+      "raw_column": "coddistritoconcelhofreguesia",
+      "action": "rename",
+      "new_name": "cod_freguesia",
+      "reason": "Normalização do nome da coluna."
+    },
+    {
+      "raw_column": "nivel_de_tensao",
+      "action": "rename",
+      "new_name": "nivel_tensao",
+      "reason": "Normalização do nome da coluna."
+    },
+    {
+      "raw_column": "energia_ativa_kwh",
+      "action": "rename",
+      "new_name": "consumo_kwh",
+      "reason": "Normalização do nome da coluna."
+    },
+    {
+      "raw_column": "ano",
+      "action": "drop",
+      "new_name": "",
+      "reason": "Redundante, derivável da coluna data."
+    },
+    {
+      "raw_column": "mes",
+      "action": "drop",
+      "new_name": "",
+      "reason": "Redundante, derivável da coluna data."
+    },
+    {
+      "raw_column": "mes_int",
+      "action": "drop",
+      "new_name": "",
+      "reason": "Redundante, derivável da coluna data."
+    }
+  ],
+  "tension_map": [
+    {
+      "raw_value": "Baixa Tensão",
+      "clean_value": "BT"
+    },
+    {
+      "raw_value": "Muito Alta, Alta e Média Tensões",
+      "clean_value": "MT/AT/MAT"
+    }
+  ],
+  "concelho_fixes": [],
+  "placeholder_prefixes": [
+    "OUTROS"
+  ],
+  "negative_values_action": "set_nan",
+  "quality_notes": [
+    "Presença de valores negativos no consumo, possivelmente associados a acertos de faturação ou injeção na rede, que devem ser tratados como nulos.",
+    "A coluna freguesia apresenta valores nulos, sugerindo falta de granularidade em certos registos.",
+    "Os prefixos 'OUTROS' indicam a existência de consumos agregados que não permitem a desagregação ao nível do concelho.",
+    "A estrutura de códigos de distrito e concelho apresenta inconsistências de preenchimento (ex: '10--'), exigindo limpeza de caracteres especiais.",
+    "O dataset cobre um período temporal extenso, sendo necessário garantir a consistência do formato da data.",
+    "A elevada cardinalidade na coluna de consumo sugere dados de faturação reais e não estimativas arredondadas."
+  ]
+}

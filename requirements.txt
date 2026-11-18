@@ -1,0 +1,16 @@
+pandas
+numpy
+matplotlib
+seaborn
+squarify
+joypy
+statsmodels
+scipy
+colorspacious
+requests
+python-dotenv
+pydantic
+langchain
+langchain-core
+langchain-google-genai
+langgraph
