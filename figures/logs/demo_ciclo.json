@@ -1,0 +1,29 @@
+{
+  "name": "demo_ciclo",
+  "spec": "Gráfico de barras horizontais com o consumo total de 2025 (em TWh) por distrito, ordenado do maior para o menor. Somar os dois níveis de tensão. Eixo do consumo a começar em zero.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 36
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "issues": []
+    }
+  ]
+}
