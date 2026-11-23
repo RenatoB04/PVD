@@ -1,0 +1,29 @@
+{
+  "name": "p1f1_heatmap_sequencial",
+  "spec": "Heatmap do consumo mensal de 2025: linhas = 18 distritos, colunas = 12 meses (Jan a Dez, por ordem cronológica), valor = consumo_gwh. Distritos ordenados por consumo anual total decrescente (maior em cima). Paleta SEQUENCIAL perceptualmente uniforme (ex.: viridis ou cividis) com barra de cor rotulada 'Consumo (GWh)'. Sem anotações numéricas nas células. Título e rótulos dos eixos em português.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 39
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "issues": []
+    }
+  ]
+}

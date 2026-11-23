@@ -1,0 +1,33 @@
+{
+  "name": "p1f1_scatter_escalas",
+  "spec": "Figura com 2 painéis lado a lado (figsize (16, 7)) com o mesmo scatterplot dos 278 concelhos: x = bt_gwh, y = mt_gwh.\n- Painel esquerdo: escala linear, título 'Escala linear'.\n- Painel direito: escala logarítmica (base 10) em x e y, título 'Escala logarítmica'; excluir os concelhos com mt_gwh = 0 e escrever no painel quantos foram excluídos (valor calculado no código).\nMapeamentos: posição (x, y); tamanho = total_gwh (mesma escala de tamanho nos dois painéis); cor = regiao com exatamente este dicionário de cores hexadecimais: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7; forma = perfil ('Predomínio BT' = círculo 'o', 'Predomínio MT/AT/MAT' = triângulo '^'). Desenha um scatter por grupo (região x perfil) com ax.scatter, para controlar cor e forma. alpha ~0.7.\nLegendas: três legendas separadas, empilhadas na margem direita da figura e fora dos painéis (fig.subplots_adjust(right=0.78) e fig.legend com bbox_to_anchor): 'Região' (5 entradas), 'Perfil' (círculo cinzento e triângulo cinzento) e 'Consumo total (GWh)' (3 tamanhos de referência). As legendas não se sobrepõem.\nAnotações: calcular no código os 3 concelhos de maior total_gwh e anotá-los pelo nome em AMBOS os painéis, com seta (annotate com arrowprops) e deslocamentos diferentes para o texto não se sobrepor.\nTítulo geral (fig.suptitle); eixos 'Consumo BT (GWh)' e 'Consumo MT/AT/MAT (GWh)'.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 63
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": [
+        "As anotações dos concelhos (Lisboa, Maia, Porto) sobrepõem-se parcialmente aos pontos ou estão mal posicionadas em relação aos mesmos, dificultando a leitura.",
+        "A legenda de 'Consumo total (GWh)' apresenta os círculos de referência com tamanhos que não correspondem à escala visual utilizada nos gráficos (o círculo de 1000 GWh na legenda parece muito maior do que os pontos de 1000 GWh no gráfico)."
+      ]
+    }
+  ]
+}

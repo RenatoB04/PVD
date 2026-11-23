@@ -36,6 +36,7 @@ class State(TypedDict, total=False):
     iteration: int
     max_iter: int
     status: str             # running | approved | unapproved | failed
+    last_critique: list[str] 
     log: Annotated[list[dict], operator.add]
 
 
@@ -62,24 +63,33 @@ legíveis; figsize aproximado (10, 6).
 explicações.
 - Se receberes problemas a corrigir, resolve-os todos e devolve o código completo."""
 
-CRITIC_SYSTEM = """És um revisor rigoroso de visualizações de dados. Recebes a \
-especificação pedida e a imagem produzida. Verifica:
-1. A figura cumpre a especificação.
-2. Título e rótulos dos eixos existem, são legíveis e indicam unidades.
-3. Não há texto sobreposto, etiquetas cortadas ou ilegíveis.
-4. A legenda existe quando é necessária e corresponde ao que se vê.
-5. As escalas, a ordenação e as cores são adequadas aos dados.
-Aprova (approved=true) se não houver problemas significativos; não penalizes \
-preferências estéticas menores. Se reprovares, lista no máximo 4 problemas \
-concretos e acionáveis, em português europeu."""
+CRITIC_SYSTEM = """És um revisor de visualizações de dados. Recebes a especificação, \
+o código Python que gerou a figura e a imagem. Regras:
+- Reporta apenas problemas que vês claramente na imagem ou que confirmas no código.
+- NÃO verifiques códigos hexadecimais de cores nem limites numéricos exatos a partir \
+dos píxeis: confirma-os no código.
+- Em gráficos de barras horizontais (barh) a primeira categoria fica em baixo, salvo \
+se o eixo y for invertido: lê o código antes de apontar um erro de ordenação.
+- Se receberes problemas da revisão anterior, verifica se foram resolvidos. Não \
+repitas críticas já resolvidas e não inventes críticas novas sem evidência clara.
+- Marca severe=true apenas para: requisito explícito da especificação não cumprido, \
+texto sobreposto ou cortado que impede a leitura, dados mal representados.
+- No máximo 4 problemas, em português europeu, concretos e acionáveis."""
 
 
 # --------------------------------------------------------------------------
 # Utilitários
 # --------------------------------------------------------------------------
+class CritiqueIssue(BaseModel):
+    description: str = Field(description="Problema concreto e acionável.")
+    severe: bool = Field(description="True só se viola um requisito explícito da "
+                         "especificação, torna texto ilegível ou apresenta os dados de "
+                         "forma errada. Questões estéticas menores: False.")
+
+
 class Critique(BaseModel):
-    approved: bool = Field(description="True se a figura não tem problemas significativos.")
-    issues: list[str] = Field(description="Problemas concretos a corrigir; vazio se aprovada.")
+    issues: list[CritiqueIssue] = Field(description="Vazio se a figura estiver correta.")
+
 
 
 def extract_code(text: str) -> str:
@@ -170,7 +180,8 @@ def build_graph(validators: list[Validator] | None = None, use_critic: bool = Tr
         issues: list[str] = []
         try:
             proc = subprocess.run([sys.executable, str(path)], cwd=ROOT,
-                                  capture_output=True, text=True, timeout=180)
+                                  capture_output=True, text=True, timeout=180,
+                                  encoding="utf-8", errors="replace")
             if proc.returncode != 0:
                 issues.append("O código falhou ao executar. Traceback:\n" + proc.stderr[-1500:])
             elif not out.exists():
@@ -190,8 +201,13 @@ def build_graph(validators: list[Validator] | None = None, use_critic: bool = Tr
     def critic_node(state: State) -> dict:
         out = ROOT / state["output_path"]
         b64 = base64.b64encode(out.read_bytes()).decode()
+        text = (f"Especificação pedida:\n{state['spec']}\n\n"
+                f"Código que gerou a figura:\n```python\n{state['code']}\n```")
+        prev = state.get("last_critique") or []
+        if prev:
+            text += "\n\nProblemas apontados na revisão anterior:\n- " + "\n- ".join(prev)
         msg = HumanMessage(content=[
-            {"type": "text", "text": f"Especificação pedida:\n{state['spec']}"},
+            {"type": "text", "text": text},
             {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}},
         ])
         try:
@@ -204,14 +220,18 @@ def build_graph(validators: list[Validator] | None = None, use_critic: bool = Tr
             return {"issues": [], "status": "approved", "stage": "critic",
                     "log": [{"node": "critic", "iteration": state["iteration"], "erro": str(exc)}]}
 
-        approved = critique.approved or not critique.issues
+        severe = [i.description for i in critique.issues if i.severe]
+        minor = [i.description for i in critique.issues if not i.severe]
+        approved = not severe
         print(f"[{state['name']}] crítico: {'APROVADA' if approved else 'REPROVADA'}")
-        for i in ([] if approved else critique.issues):
-            print(f"    - {i}")
-        return {"issues": [] if approved else critique.issues, "stage": "critic",
+        for i in severe:
+            print(f"    - [grave] {i}")
+        for i in minor:
+            print(f"    - [menor, não bloqueia] {i}")
+        return {"issues": severe, "last_critique": severe, "stage": "critic",
                 "status": "approved" if approved else "running",
                 "log": [{"node": "critic", "iteration": state["iteration"],
-                         "approved": approved, "issues": critique.issues}]}
+                         "approved": approved, "severe": severe, "minor": minor}]}
 
     # ---- Nó: Desistir -----------------------------------------------------
     def give_up_node(state: State) -> dict:

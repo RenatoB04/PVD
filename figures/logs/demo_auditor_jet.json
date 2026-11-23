@@ -1,0 +1,35 @@
+{
+  "name": "demo_auditor_jet",
+  "spec": "Heatmap do consumo mensal (consumo_gwh) por distrito (linhas) e mês (colunas, Jan a Dez). Usa obrigatoriamente a paleta 'jet' (colormap) para a cor das células. Barra de cor rotulada 'Consumo (GWh)'. Título e eixos em português.",
+  "status": "approved",
+  "iteracoes": 2,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 35
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": [
+        "A paleta 'jet' (arco-íris) é proibida: não é perceptualmente uniforme nem segura para daltónicos. Usa uma paleta sequencial (viridis, cividis), divergente centrada ou qualitativa (Okabe-Ito)."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 37
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 2,
+      "issues": []
+    }
+  ]
+}

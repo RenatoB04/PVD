@@ -1,0 +1,33 @@
+{
+  "name": "p1f1_divergente_variacao",
+  "spec": "Barras horizontais (ax.barh) da variação percentual do consumo 2022 -> 2025 por distrito (var_pct), ordenadas de modo que a MAIOR variação apareça no TOPO e a MENOR em BAIXO. A cor de cada barra codifica var_pct com a paleta divergente 'PuOr' aplicada através de matplotlib.colors.TwoSlopeNorm(vcenter=0) (vmin e vmax simétricos: -m e +m, com m = máximo de |var_pct|), e uma barra de cor rotulada 'Variação (%)'. Linha vertical tracejada em x = 0 (ax.axvline). Limites do eixo x simétricos: ax.set_xlim(-m*1.25, m*1.25). Escrever o valor de cada barra (1 casa decimal, com %) junto à barra. Título e rótulos em português.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 53
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": [
+        "A ordenação das barras está invertida em relação ao solicitado: a maior variação (Castelo Branco) aparece no topo, mas a ordenação crescente no código (ascending=True) faz com que a menor variação (Aveiro) fique na base, o que está correto, porém a especificação exige que a maior variação esteja no topo e a menor na base, o que implica que o gráfico atual está correto, mas a lógica de ordenação no código (ascending=True) coloca o menor valor na primeira posição do eixo y (em baixo), resultando na maior variação no topo. Contudo, a ordem visual atual apresenta a maior variação no topo, cumprindo o requisito.",
+        "O gráfico não apresenta problemas de visualização ou violações da especificação."
+      ]
+    }
+  ]
+}

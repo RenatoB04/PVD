@@ -1,0 +1,28 @@
+[
+  {
+    "paletas_detetadas": {
+      "jet": "banned"
+    },
+    "n_hex": 0,
+    "mappings": [],
+    "issues": [
+      "A paleta 'jet' (arco-íris) é proibida: não é perceptualmente uniforme nem segura para daltónicos. Usa uma paleta sequencial (viridis, cividis), divergente centrada ou qualitativa (Okabe-Ito)."
+    ]
+  },
+  {
+    "paletas_detetadas": {
+      "viridis": "sequential"
+    },
+    "n_hex": 0,
+    "mappings": [
+      {
+        "variable": "consumo_gwh",
+        "nature": "continua_sequencial",
+        "palette": "viridis",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  }
+]

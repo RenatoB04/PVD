@@ -1,0 +1,18 @@
+[
+  {
+    "paletas_detetadas": {
+      "PuOr": "diverging"
+    },
+    "n_hex": 0,
+    "mappings": [
+      {
+        "variable": "var_pct",
+        "nature": "continua_divergente",
+        "palette": "PuOr",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  }
+]
