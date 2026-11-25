@@ -1,0 +1,30 @@
+{
+  "name": "p1f2_regiao",
+  "spec": "Pergunta analítica: Qual o consumo total de eletricidade em 2025 de cada região?\nGeometria OBRIGATÓRIA: bar (escolhida por análise de cardinalidade e volume).\nColunas: categoria = regiao; 2.ª categoria = -; valor = total_gwh.\nInstruções da geometria: Barras horizontais (ax.barh), da maior (no topo) para a menor, cor única (ex. #0072B2), valor escrito junto a cada barra, eixo do valor a começar em ZERO.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 66
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

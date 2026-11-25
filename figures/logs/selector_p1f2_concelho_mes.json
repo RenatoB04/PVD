@@ -1,0 +1,112 @@
+{
+  "name": "p1f2_concelho_mes",
+  "pergunta": "Como varia ao longo dos meses de 2025 o consumo dos concelhos?",
+  "data": "data/clean/f2_concelho_mes.csv",
+  "escolha_final": {
+    "geometry": "heatmap",
+    "category_column": "concelho",
+    "second_category_column": "mes_nome",
+    "value_column": "consumo_gwh",
+    "top_n": 60,
+    "log_scale": true,
+    "rationale": "Como temos duas dimensões categóricas (278 concelhos e 12 meses) e uma variável numérica com alta assimetria de 4.96 e 3336 linhas, escolheu-se um heatmap com limite de 60 linhas e escala logarítmica para visualizar eficazmente os padrões de consumo."
+  },
+  "tentativas": 1,
+  "historico": [
+    {
+      "attempt": 1,
+      "escolha": {
+        "geometry": "heatmap",
+        "category_column": "concelho",
+        "second_category_column": "mes_nome",
+        "value_column": "consumo_gwh",
+        "top_n": 60,
+        "log_scale": true,
+        "rationale": "Como temos duas dimensões categóricas (278 concelhos e 12 meses) e uma variável numérica com alta assimetria de 4.96 e 3336 linhas, escolheu-se um heatmap com limite de 60 linhas e escala logarítmica para visualizar eficazmente os padrões de consumo."
+      }
+    },
+    {
+      "attempt": 1,
+      "erros": []
+    }
+  ],
+  "perfil": {
+    "n_linhas": 3336,
+    "colunas": {
+      "concelho": {
+        "tipo": "categorica",
+        "n_distintos": 278,
+        "n_nulos": 0,
+        "exemplos": [
+          "Abrantes",
+          "Aguiar da Beira",
+          "Alandroal",
+          "Albergaria-a-Velha"
+        ],
+        "obs_por_categoria_min": 12,
+        "obs_por_categoria_mediana": 12.0
+      },
+      "distrito": {
+        "tipo": "categorica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "exemplos": [
+          "Santarém",
+          "Guarda",
+          "Évora",
+          "Aveiro"
+        ],
+        "obs_por_categoria_min": 120,
+        "obs_por_categoria_mediana": 174.0
+      },
+      "regiao": {
+        "tipo": "categorica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "exemplos": [
+          "Lisboa e Vale do Tejo",
+          "Centro",
+          "Alentejo",
+          "Algarve"
+        ],
+        "obs_por_categoria_min": 192,
+        "obs_por_categoria_mediana": 600.0
+      },
+      "mes": {
+        "tipo": "categorica",
+        "n_distintos": 12,
+        "n_nulos": 0,
+        "exemplos": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "obs_por_categoria_min": 278,
+        "obs_por_categoria_mediana": 278.0
+      },
+      "mes_nome": {
+        "tipo": "categorica",
+        "n_distintos": 12,
+        "n_nulos": 0,
+        "exemplos": [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr"
+        ],
+        "obs_por_categoria_min": 278,
+        "obs_por_categoria_mediana": 278.0
+      },
+      "consumo_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 3336,
+        "n_nulos": 0,
+        "minimo": 0.359,
+        "mediana": 5.059,
+        "maximo": 292.865,
+        "assimetria": 4.96
+      }
+    }
+  }
+}

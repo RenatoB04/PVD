@@ -1,0 +1,73 @@
+{
+  "name": "p1f2_regiao",
+  "pergunta": "Qual o consumo total de eletricidade em 2025 de cada região?",
+  "data": "data/clean/f2_regiao.csv",
+  "escolha_final": {
+    "geometry": "bar",
+    "category_column": "regiao",
+    "second_category_column": "",
+    "value_column": "total_gwh",
+    "top_n": 0,
+    "log_scale": false,
+    "rationale": "Como a cardinalidade da coluna de regiões é baixa (5 categorias) e o volume do dataset é de apenas 5 linhas, a geometria de barras é a escolha ideal para comparar o consumo total de eletricidade sem distorções de escala, já que a assimetria é reduzida."
+  },
+  "tentativas": 1,
+  "historico": [
+    {
+      "attempt": 1,
+      "escolha": {
+        "geometry": "bar",
+        "category_column": "regiao",
+        "second_category_column": "",
+        "value_column": "total_gwh",
+        "top_n": 0,
+        "log_scale": false,
+        "rationale": "Como a cardinalidade da coluna de regiões é baixa (5 categorias) e o volume do dataset é de apenas 5 linhas, a geometria de barras é a escolha ideal para comparar o consumo total de eletricidade sem distorções de escala, já que a assimetria é reduzida."
+      }
+    },
+    {
+      "attempt": 1,
+      "erros": []
+    }
+  ],
+  "perfil": {
+    "n_linhas": 5,
+    "colunas": {
+      "regiao": {
+        "tipo": "categorica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "exemplos": [
+          "Alentejo",
+          "Algarve",
+          "Centro",
+          "Lisboa e Vale do Tejo"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 1.0
+      },
+      "total_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "minimo": 2197.994,
+        "mediana": 12472.698,
+        "maximo": 16570.916,
+        "assimetria": -0.25
+      },
+      "n_concelhos": {
+        "tipo": "categorica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "exemplos": [
+          "43",
+          "16",
+          "101",
+          "50"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 1.0
+      }
+    }
+  }
+}

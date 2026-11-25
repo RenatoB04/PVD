@@ -1,0 +1,18 @@
+[
+  {
+    "paletas_detetadas": {
+      "viridis": "sequential"
+    },
+    "n_hex": 0,
+    "mappings": [
+      {
+        "variable": "consumo_gwh",
+        "nature": "continua_sequencial",
+        "palette": "viridis",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  }
+]

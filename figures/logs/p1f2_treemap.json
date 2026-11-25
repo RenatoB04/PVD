@@ -1,0 +1,47 @@
+{
+  "name": "p1f2_treemap",
+  "spec": "Pergunta analítica: Como se reparte o consumo total de 2025 por região e, dentro de cada região, por distrito?\nGeometria OBRIGATÓRIA: treemap (escolhida por análise de cardinalidade e volume).\nColunas: categoria = regiao; 2.ª categoria = distrito; valor = total_gwh.\nInstruções da geometria: Treemap de 2 níveis com squarify, sem barras. Recipe: W=H=100; ordena as regiões por total decrescente; rects_reg = squarify.squarify(squarify.normalize_sizes(totais_regiao, W, H), 0, 0, W, H); para cada região, ordena os seus distritos por valor decrescente e faz rects_dist = squarify.squarify(squarify.normalize_sizes(valores, r['dx'], r['dy']), r['x'], r['y'], r['dx'], r['dy']); desenha com matplotlib.patches.Rectangle: cada distrito com a cor da sua região e contorno branco fino; contorno branco grosso à volta de cada região; etiqueta dentro de cada retângulo (distrito e GWh) quando houver espaço; legenda das regiões; eixos desligados.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "status": "approved",
+  "iteracoes": 2,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 87
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": [
+        "O código falhou ao executar. Traceback:\nTraceback (most recent call last):\n  File \"C:\\Users\\paulobastos\\Documents\\pvd\\figures\\code\\p1f2_treemap.py\", line 87, in <module>\n    mpasses.Patch(color=cor, label=reg)\n    ^^^^^^^\nNameError: name 'mpasses' is not defined. Did you mean: 'mpatches'?\n"
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 85
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 2,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 2,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "name": "p1f2_treemap",
+  "pergunta": "Como se reparte o consumo total de 2025 por região e, dentro de cada região, por distrito?",
+  "data": "data/clean/f2_distrito.csv",
+  "escolha_final": {
+    "geometry": "treemap",
+    "category_column": "regiao",
+    "second_category_column": "distrito",
+    "value_column": "total_gwh",
+    "top_n": 0,
+    "log_scale": false,
+    "rationale": "Para visualizar proporções aninhadas onde a categoria superior e inferior representam a repartição do consumo por região e distrito com um volume de 18 linhas, o treemap é a geometria ideal. A assimetria de 1.4 no valor numérico não requer escala logarítmica para este tipo de visualização proporcional."
+  },
+  "tentativas": 1,
+  "historico": [
+    {
+      "attempt": 1,
+      "escolha": {
+        "geometry": "treemap",
+        "category_column": "regiao",
+        "second_category_column": "distrito",
+        "value_column": "total_gwh",
+        "top_n": 0,
+        "log_scale": false,
+        "rationale": "Para visualizar proporções aninhadas onde a categoria superior e inferior representam a repartição do consumo por região e distrito com um volume de 18 linhas, o treemap é a geometria ideal. A assimetria de 1.4 no valor numérico não requer escala logarítmica para este tipo de visualização proporcional."
+      }
+    },
+    {
+      "attempt": 1,
+      "erros": []
+    }
+  ],
+  "perfil": {
+    "n_linhas": 18,
+    "colunas": {
+      "regiao": {
+        "tipo": "categorica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "exemplos": [
+          "Alentejo",
+          "Algarve",
+          "Centro",
+          "Lisboa e Vale do Tejo"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 3.0
+      },
+      "distrito": {
+        "tipo": "categorica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "exemplos": [
+          "Beja",
+          "Portalegre",
+          "Évora",
+          "Faro"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 1.0
+      },
+      "total_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "minimo": 392.662,
+        "mediana": 1828.218,
+        "maximo": 9299.364,
+        "assimetria": 1.4
+      },
+      "bt_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "minimo": 288.216,
+        "mediana": 866.858,
+        "maximo": 5347.023,
+        "assimetria": 1.88
+      },
+      "mt_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "minimo": 67.698,
+        "mediana": 669.967,
+        "maximo": 3952.341,
+        "assimetria": 0.93
+      },
+      "n_concelhos": {
+        "tipo": "categorica",
+        "n_distintos": 12,
+        "n_nulos": 0,
+        "exemplos": [
+          "14",
+          "15",
+          "16",
+          "19"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 1.0
+      }
+    }
+  }
+}

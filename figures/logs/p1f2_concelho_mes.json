@@ -1,0 +1,30 @@
+{
+  "name": "p1f2_concelho_mes",
+  "spec": "Pergunta analítica: Como varia ao longo dos meses de 2025 o consumo dos concelhos?\nGeometria OBRIGATÓRIA: heatmap (escolhida por análise de cardinalidade e volume).\nColunas: categoria = concelho; 2.ª categoria = mes_nome; valor = consumo_gwh.\nMostrar apenas as 60 categorias de concelho com maior valor total e indicá-lo no título ou numa nota.\nUsar escala logarítmica (ver instruções da geometria) e indicá-la no rótulo do eixo.\nInstruções da geometria: Heatmap (ax.imshow, ax.pcolormesh ou sns.heatmap): linhas = category_column, colunas = second_category_column (meses por ordem cronológica Jan..Dez, se aplicável), linhas ordenadas pelo valor total decrescente (maior em cima); paleta SEQUENCIAL (viridis); barra de cor rotulada com unidades; sem anotações numéricas. Se log_scale=true usa matplotlib.colors.LogNorm.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 70
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

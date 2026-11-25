@@ -1,0 +1,30 @@
+{
+  "name": "p1f2_concelhos",
+  "spec": "Pergunta analítica: Que concelhos consomem mais eletricidade em 2025 (total_gwh)?\nGeometria OBRIGATÓRIA: dot_plot (escolhida por análise de cardinalidade e volume).\nColunas: categoria = concelho; 2.ª categoria = -; valor = total_gwh.\nMostrar apenas as 30 categorias de concelho com maior valor total e indicá-lo no título ou numa nota.\nInstruções da geometria: Dot plot de Cleveland: uma categoria por linha no eixo y, ordenadas por valor (maior no topo), um ponto por categoria (ax.scatter) com uma linha horizontal ténue (ax.hlines) do eixo até ao ponto, cor única, grelha vertical suave. NÃO uses barras.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 96
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

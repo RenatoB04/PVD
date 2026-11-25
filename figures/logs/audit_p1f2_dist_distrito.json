@@ -1,0 +1,44 @@
+[
+  {
+    "paletas_detetadas": {},
+    "n_hex": 5,
+    "mappings": [
+      {
+        "variable": "regiao",
+        "nature": "categorica_nominal",
+        "palette": "Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  },
+  {
+    "paletas_detetadas": {},
+    "n_hex": 5,
+    "mappings": [
+      {
+        "variable": "regiao",
+        "nature": "categorica_nominal",
+        "palette": "Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  },
+  {
+    "paletas_detetadas": {},
+    "n_hex": 5,
+    "mappings": [
+      {
+        "variable": "regiao",
+        "nature": "categorica_nominal",
+        "palette": "#0072B2, #E69F00, #D55E00, #009E73, #CC79A7",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  }
+]
