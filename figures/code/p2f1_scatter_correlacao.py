@@ -12,25 +12,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# 1. Carregar dados e textos
+# Carregar textos e estatísticas
+T = json.load(open('data/clean/p2f1_texts.json', encoding='utf-8'))['scatter']
+stats = T['stats']
+
+# Ler dados
 df = pd.read_csv(DATA_PATH)
 d = df[(df['bt_gwh'] > 0) & (df['mt_gwh'] > 0)].copy()
 
-texts_path = 'data/clean/p2f1_texts.json'
-with open(texts_path, encoding='utf-8') as f:
-    T = json.load(f)['scatter']
-
-# 2. Configuração da figura e layout (Wilke style: limpo, sem moldura superior/direita)
+# Configuração da figura
 fig, ax = plt.subplots(figsize=(11, 9))
 
-# Espaço reservado para título, subtítulo e rodapé
-fig.subplots_adjust(top=0.85, bottom=0.18, left=0.08, right=0.80)
-
-# Título e subtítulo (Wilke: sem maiúsculas excessivas, alinhados à esquerda)
-fig.suptitle(T['title'], fontsize=14, fontweight='bold', x=0.08, ha='left')
-fig.text(0.08, 0.89, T['subtitle'], fontsize=10, color='#555555', ha='left')
-
-# 3. Cores e regiões (Paleta ColorBrewer / Okabe-Ito amigável a daltónicos)
+# Cores e marcadores por região
 cores = {
     'Norte': '#0072B2',
     'Centro': '#E69F00',
@@ -39,75 +32,88 @@ cores = {
     'Algarve': '#CC79A7'
 }
 
+marcadores = {
+    'Norte': 'o',
+    'Centro': 's',
+    'Lisboa e Vale do Tejo': '^',
+    'Alentejo': 'D',
+    'Algarve': 'v'
+}
+
+# Scatter por região
 for regiao, cor in cores.items():
     subset = d[d['regiao'] == regiao]
-    ax.scatter(
-        subset['bt_gwh'],
-        subset['mt_gwh'],
-        s=35,
-        alpha=0.75,
-        c=cor,
-        label=regiao,
-        edgecolors='none'
-    )
+    if not subset.empty:
+        ax.scatter(
+            subset['bt_gwh'],
+            subset['mt_gwh'],
+            c=cor,
+            marker=marcadores[regiao],
+            s=35,
+            alpha=0.75,
+            edgecolors='white',
+            linewidths=0.5,
+            label=regiao
+        )
 
-# 4. Escalas logarítmicas
-ax.set_xscale('log')
-ax.set_yscale('log')
-
-# 5. Reta de regressão em log-log
+# Regressão linear em log-log
 log_bt = np.log10(d['bt_gwh'])
 log_mt = np.log10(d['mt_gwh'])
 a, b = np.polyfit(log_bt, log_mt, 1)
 
 x_vals = np.array([d['bt_gwh'].min(), d['bt_gwh'].max()])
 y_vals = 10**(a * np.log10(x_vals) + b)
-ax.plot(x_vals, y_vals, linestyle='--', color='#333333', linewidth=1.5, label='Regressão log-log')
+ax.plot(x_vals, y_vals, color='black', linestyle='--', linewidth=1.5, label='Regressão log-log')
 
-# 6. Caixa de texto com estatísticas (canto superior esquerdo)
-stats = T['stats']
+# Escalas logarítmicas
+ax.set_xscale('log')
+ax.set_yscale('log')
+
+# Eixos
+ax.set_xlabel('Consumo BT (GWh)', fontsize=11)
+ax.set_ylabel('Consumo MT/AT/MAT (GWh)', fontsize=11)
+
+# Caixa de texto com estatísticas
+r_pearson = stats.get('r_pearson_log', 0)
+rho_spearman = stats.get('rho_spearman', 0)
+n_concelhos = stats.get('n_concelhos', len(d))
+
 texto_stats = (
-    f"r (Pearson log-log): {stats['r_pearson_log']:.2f}\n"
-    f"ρ (Spearman): {stats['rho_spearman']:.2f}\n"
-    f"n: {stats['n_concelhos']}"
+    f"r (Pearson log-log): {r_pearson:.2f}\n"
+    f"ρ (Spearman): {rho_spearman:.2f}\n"
+    f"n = {n_concelhos}"
 )
 
+props = dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.8, edgecolor='#cccccc')
 ax.text(
-    0.03, 0.95,
+    0.03, 0.97,
     texto_stats,
     transform=ax.transAxes,
-    fontsize=9,
+    fontsize=10,
     verticalalignment='top',
-    bbox=dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.8, edgecolor='#cccccc')
+    bbox=props
 )
 
-# 7. Eixos e grelha subtil
-ax.set_xlabel('Consumo BT (GWh)', fontsize=10)
-ax.set_ylabel('Consumo MT/AT/MAT (GWh)', fontsize=10)
-
-ax.grid(True, which='both', linestyle=':', linewidth=0.5, color='#dddddd')
-ax.set_axisbelow(True)
-
-# Remover espinhas superiores e direitas (Wilke)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_color('#333333')
-ax.spines['bottom'].set_color('#333333')
-
-# 8. Legenda fora do gráfico (à direita)
+# Legenda fora do gráfico
 ax.legend(
     title='Região',
     bbox_to_anchor=(1.05, 1),
     loc='upper left',
     frameon=False,
-    fontsize=9,
+    fontsize=10,
     title_fontsize=10
 )
 
-# 9. Legenda / Nota de rodapé explicativa
-caption_wrapped = textwrap.fill(T['caption'], width=120)
-fig.text(0.08, 0.04, caption_wrapped, fontsize=9, color='#333333', ha='left', va='top', wrap=True)
+# Títulos, subtítulo e rodapé (legenda explicativa)
+fig.suptitle(T['title'], fontsize=14, fontweight='bold', x=0.01, ha='left')
+fig.text(0.01, 0.915, T['subtitle'], fontsize=10, color='#333333', ha='left')
 
-# 10. Gravar e fechar
-plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches='tight')
+legenda_texto = textwrap.fill(T['caption'], width=120)
+fig.text(0.01, 0.02, legenda_texto, fontsize=9, color='#333333', ha='left', va='bottom', wrap=True)
+
+# Ajuste de layout para evitar sobreposições
+fig.subplots_adjust(top=0.88, bottom=0.18, left=0.08, right=0.80)
+
+# Gravar figura
+plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
 plt.close()

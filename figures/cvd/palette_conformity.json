@@ -25,7 +25,7 @@
   {
     "paleta": "viridis (sequential)",
     "tipo": "sequencial",
-    "criterio": "|ρ| luminosidade vs posição",
+    "criterio": "ρ de Spearman (luminosidade vs posição)",
     "resultados": {
       "normal": {
         "valor": 1.0,
@@ -62,7 +62,7 @@
       },
       "deuteranopia": {
         "valor": 14.8,
-        "ok": true,
+        "ok": false,
         "par_critico": [
           "#009E73",
           "#CC79A7"
@@ -70,7 +70,7 @@
       },
       "protanopia": {
         "valor": 14.0,
-        "ok": true,
+        "ok": false,
         "par_critico": [
           "#0072B2",
           "#CC79A7"
@@ -89,7 +89,7 @@
       "p2f1_regioes_indice",
       "p2f1_scatter_correlacao"
     ],
-    "estado": "CONFORME"
+    "estado": "ATENÇÃO"
   },
   {
     "paleta": "hex: #0072B2 #D55E00",

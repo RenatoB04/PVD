@@ -1,13 +1,13 @@
 {
   "name": "p2f1_regioes_indice",
-  "spec": "Gráfico de linhas (figsize (12, 7.5)): índice do consumo mensal de cada uma das 5 regiões, com base 100 = média dos 12 meses de 2022 dessa região. Passos: pivot (data x regiao) com consumo_gwh; dividir pela média de 2022 de cada região e multiplicar por 100; suavizar com média móvel centrada de 12 meses (rolling(12, center=True)). Uma linha por região (espessura 2) com exatamente estas cores: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Linha horizontal tracejada cinzenta em y = 100. Eixo x com uma marca por ano (formato %Y), rótulo 'Data'; eixo y 'Índice de consumo (2022 = 100, média móvel de 12 meses)'. Legenda das regiões FORA do gráfico, à direita.\nTEXTOS: o título, o subtítulo e a legenda NÃO se escrevem à mão. Lê-os do ficheiro 'data/clean/p2f1_texts.json' com json.load(open(caminho, encoding='utf-8')); chave 'regioes', campos 'title', 'subtitle' e 'caption'. Layout: título com fig.suptitle (fontsize 14, bold, x=0.01, ha='left'); subtítulo logo abaixo com fig.text (fontsize 10, cinzento); legenda no rodapé com fig.text e textwrap.fill(width=120), fontsize 9. Reserva espaço para estes três blocos (fig.subplots_adjust com top e bottom adequados) sem sobreposição.\nPara referência, o conteúdo atual é: título='Algarve lidera crescimento anual no consumo de eletricidade com 4,01%'; subtítulo='Evolução e tendência do consumo de eletricidade por região no período analisado'; legenda='Todas as regiões apresentam uma tendência de crescimento positivo no consumo de eletricidade, variando entre 0,91% ao ano no Centro e 4,01% ao ano no Algarve. Destaca-se a variação de 12 meses de 11,0% no Alentejo. Estas conclusões baseiam-se num período curto de observação, sendo necessárias análises adicionais.'",
+  "spec": "Gráfico de linhas (figsize (12, 7.5)): índice do consumo mensal de cada uma das 5 regiões, com base 100 = média dos 12 meses de 2022 dessa região. Passos: pivot (data x regiao) com consumo_gwh; dividir pela média de 2022 de cada região e multiplicar por 100; suavizar com média móvel centrada de 12 meses (rolling(12, center=True)). Uma linha por região (espessura 2) com exatamente estas cores: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Linha horizontal tracejada cinzenta em y = 100. Eixo x com uma marca por ano (formato %Y), rótulo 'Data'; eixo y 'Índice de consumo (2022 = 100, média móvel de 12 meses)'. Legenda das regiões FORA do gráfico, à direita. Redundância para daltónicos (Wilke, cap. 19): além da cor, cada região tem estilo de linha e marcador próprios: Norte '-' com 'o'; Centro '--' com 's'; Lisboa e Vale do Tejo '-.' com '^'; Alentejo ':' com 'D'; Algarve (0,(5,1)) com 'v'. Marcadores a cada 6 meses (markevery=6, markersize=6). A legenda mostra o estilo e o marcador de cada região.\nTEXTOS (obrigatório): carrega o ficheiro assim: T = json.load(open('data/clean/p2f1_texts.json', encoding='utf-8'))['regioes']. O título, o subtítulo e a legenda NÃO se escrevem à mão: usa T['title'], T['subtitle'] e T['caption']; as estatísticas calculadas estão em T['stats'] (dicionário). Layout: título com fig.suptitle (fontsize 14, bold, x=0.01, ha='left'); subtítulo logo abaixo com fig.text (fontsize 10, cinzento); legenda no rodapé com fig.text e textwrap.fill(width=120), fontsize 9. Reserva espaço para estes três blocos (fig.subplots_adjust com top e bottom adequados) sem sobreposição.\nPara referência, o conteúdo atual é: título='Algarve regista a maior tendência de crescimento anual no consumo de eletricidade com 4,0 por cento'; subtítulo='Consumo mensal de eletricidade por região (GWh) por regressão linear sobre a série dessazonalizada (STL) de cada região'; legenda='A comparação revela tendências anuais positivas em todas as zonas, destacando-se o Algarve com 4,0 por cento ao ano e o Centro com 0,9 por cento ao ano. A variação a doze meses atingiu 11,0 por cento no Alentejo. As tendências baseiam-se em modelos cujos coeficientes de determinação r2 variam entre as regiões e o período de análise pode ser curto.'",
   "status": "approved",
   "iteracoes": 1,
   "eventos": [
     {
       "node": "generator",
       "iteration": 1,
-      "linhas": 101
+      "linhas": 122
     },
     {
       "node": "validator",
@@ -24,10 +24,7 @@
       "iteration": 1,
       "approved": true,
       "severe": [],
-      "minor": [
-        "O alinhamento horizontal do título (x=0.08) não coincide com o do subtítulo e o eixo y, criando um desalinhamento visual na margem esquerda.",
-        "O parâmetro bbox_inches='tight' no savefig pode anular parcialmente as margens calculadas para fig.text no rodapé, juntando demasiado a legenda ao limite inferior."
-      ]
+      "minor": []
     }
   ]
 }

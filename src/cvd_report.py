@@ -30,6 +30,7 @@ KINDS = {"normal": "Visão normal",
 CVD = {"deuteranopia": {"name": "sRGB1+CVD", "cvd_type": "deuteranomaly", "severity": 100},
        "protanopia": {"name": "sRGB1+CVD", "cvd_type": "protanomaly", "severity": 100}}
 MIN_DE = 10.0    # heurística: distância mínima entre cores (CAM02-UCS)
+MIN_DE_QUAL = 20.0   # heurística: paletas qualitativas aplicadas a marcas pequenas
 MIN_RHO = 0.98   # heurística: monotonia da luminosidade numa paleta sequencial
 
 
@@ -50,7 +51,7 @@ def test_qualitative(colors: np.ndarray, labels: list[str]) -> dict:
         c = jab(simulate(colors, kind))
         d, i, j = min((float(np.linalg.norm(c[a] - c[b])), a, b)
                       for a, b in itertools.combinations(range(len(c)), 2))
-        out[kind] = {"valor": round(d, 1), "ok": d >= MIN_DE, "par_critico": [labels[i], labels[j]]}
+        out[kind] = {"valor": round(d, 1), "ok": d >= MIN_DE_QUAL, "par_critico": [labels[i], labels[j]]}
     return out
 
 
@@ -120,7 +121,7 @@ def evaluate(e: dict):
     if cmap is None:
         return None
     if e["tipo"] == "sequential":
-        return "sequencial", "|ρ| luminosidade vs posição", test_sequential(cmap)
+        return "sequencial", "ρ de Spearman (luminosidade vs posição)", test_sequential(cmap)
     return "divergente", "ΔE entre extremos", test_diverging(cmap)
 
 
@@ -139,8 +140,9 @@ def palette_report() -> None:
                      "figuras": sorted(set(e["figuras"])), "estado": estado})
     header = ("| Paleta | Tipo | Critério | Visão normal | Deuteranopia | Protanopia | Nº figuras | Estado |\n"
               "|---|---|---|---|---|---|---|---|\n")
-    note = (f"\nLimiares heurísticos: ΔE ≥ {MIN_DE} (CAM02-UCS) e |ρ| ≥ {MIN_RHO}. "
-            "Simulação: Machado et al. (2009) via colorspacious, severidade 100 (dicromacia).\n")
+    note = (f"\nLimiares heurísticos (personalizados, não do livro): ΔE ≥ {MIN_DE_QUAL} entre cores "
+            f"(qualitativas, CAM02-UCS), ΔE ≥ {MIN_DE} entre extremos (divergentes) e ρ ≥ {MIN_RHO} "
+            "(sequenciais). Simulação: Machado et al. (2009) via colorspacious, severidade 100.\n")
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "palette_conformity.md").write_text(header + "\n".join(rows) + "\n" + note, encoding="utf-8")
     (OUT / "palette_conformity.json").write_text(json.dumps(data, ensure_ascii=False, indent=2),

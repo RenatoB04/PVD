@@ -123,10 +123,17 @@ def build_figuras(texts: dict) -> list[dict]:
         {
             "name": "p2f1_scatter_correlacao", "data": "data/clean/p1_concelho_2025.csv",
             "desc": DESC_CONC,
-            "extra": [uses_texts("scatter"),
-                      requires((r"polyfit", "Calcula a reta de regressão em log-log com np.polyfit."),
-                               (r"r_pearson_log", "Lê stats['r_pearson_log'] do JSON, sem recalcular."),
-                               (r"rho_spearman", "Lê stats['rho_spearman'] do JSON, sem recalcular."))],
+            "extra": [
+                    uses_texts("scatter"),
+                    requires(
+                        (r"polyfit", "Calcula a reta de regressão em log-log com np.polyfit."),
+                        (r"r_pearson_log", "Lê stats['r_pearson_log'] do JSON, sem recalcular."),
+                        (r"rho_spearman", "Lê stats['rho_spearman'] do JSON, sem recalcular.")
+                    ),
+                    requires(
+                        (r"marker", "Define um marcador por região (marker=...).")
+                    )
+                ],
             "spec": f"""Scatterplot dos concelhos (figsize (11, 9)). Logo a seguir a ler o CSV, filtra: \
 d = df[(df['bt_gwh'] > 0) & (df['mt_gwh'] > 0)] e usa SEMPRE d (scatter e polyfit), porque log10(0) é infinito. \
 x = bt_gwh, y = mt_gwh, ambos em escala logarítmica (ax.set_xscale('log'), ax.set_yscale('log')). Um \
@@ -136,7 +143,9 @@ intervalo de x (10**(a*log10(x)+b)). Caixa de texto dentro do gráfico (canto su
 semitransparente) com valores lidos de stats = T['stats']: r de Pearson (log-log) = stats['r_pearson_log'], \
 rho de Spearman = stats['rho_spearman'] e n = stats['n_concelhos'] (2 casas decimais nos coeficientes). \
 Eixos 'Consumo BT (GWh)' e 'Consumo MT/AT/MAT (GWh)'. Legenda das regiões FORA do gráfico (bbox_to_anchor, à \
-direita). Os dados são o ano de 2025.
+direita). Os dados são o ano de 2025. Redundância para daltónicos: além da cor, cada região tem um marcador \
+próprio: Norte 'o'; Centro 's'; Lisboa e Vale do Tejo '^'; Alentejo 'D'; Algarve 'v'; com contorno branco \
+fino (edgecolors='white', linewidths=0.5).
 {text_block('scatter', texts)}""",
         },
         {
@@ -153,14 +162,24 @@ rótulo 'Data'; eixo y 'Consumo mensal (GWh)'. Grelha horizontal suave. Legenda 
         },
         {
             "name": "p2f1_regioes_indice", "data": "data/clean/p2_serie_regiao.csv", "desc": DESC_REG,
-            "extra": [uses_texts("regioes"), requires(ROLLING)],
+            "extra": [
+                uses_texts("regioes"),
+                requires(ROLLING),
+                requires(
+                    (r"linestyle|ls\s*=", "Define um estilo de linha por região (linestyle)."),
+                    (r"marker", "Define um marcador por região (marker=..., markevery=6).")
+                )
+            ],
             "spec": f"""Gráfico de linhas (figsize (12, 7.5)): índice do consumo mensal de cada uma das \
 5 regiões, com base 100 = média dos 12 meses de 2022 dessa região. Passos: pivot (data x regiao) com \
 consumo_gwh; dividir pela média de 2022 de cada região e multiplicar por 100; suavizar com média móvel \
 centrada de 12 meses (rolling(12, center=True)). Uma linha por região (espessura 2) com exatamente estas \
 cores: {OKABE}. Linha horizontal tracejada cinzenta em y = 100. Eixo x com uma marca por ano (formato %Y), \
 rótulo 'Data'; eixo y 'Índice de consumo (2022 = 100, média móvel de 12 meses)'. Legenda das regiões FORA \
-do gráfico, à direita.
+do gráfico, à direita. Redundância para daltónicos (Wilke, cap. 19): além da cor, cada região tem estilo de \
+linha e marcador próprios: Norte '-' com 'o'; Centro '--' com 's'; Lisboa e Vale do Tejo '-.' com '^'; \
+Alentejo ':' com 'D'; Algarve (0,(5,1)) com 'v'. Marcadores a cada 6 meses (markevery=6, markersize=6). \
+A legenda mostra o estilo e o marcador de cada região.
 {text_block('regioes', texts)}""",
         },
         {
