@@ -27,9 +27,9 @@ assert reg.groupby("regiao")["data"].nunique().nunique() == 1, "Regiões com nº
 reg.to_csv(DATA_CLEAN / "p2_serie_regiao.csv", index=False)
 
 print(f"Série nacional: {len(nac)} meses ({nac['data'].min():%Y-%m} a {nac['data'].max():%Y-%m})")
-print(nac.round(1).head(3).to_string(index=False))
+print(nac.set_index("data").round(1).head(3).to_string())
 print("...")
-print(nac.round(1).tail(3).to_string(index=False))
+print(nac.set_index("data").round(1).tail(3).to_string())
 print(f"\nSérie por região: {len(reg)} linhas = {reg['regiao'].nunique()} regiões x "
       f"{reg['data'].nunique()} meses")
 print("Soma nacional vs soma regional (GWh):",

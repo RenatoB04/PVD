@@ -191,6 +191,9 @@ def build_graph(validators: list[Validator] | None = None, use_critic: bool = Tr
         except subprocess.TimeoutExpired:
             issues.append("O código excedeu o tempo limite de 180 s. Simplifica o processamento.")
 
+        if issues:
+            print("    " + issues[0].strip().splitlines()[-1][:300])
+
         print(f"[{state['name']}] executor: {'ERRO' if issues else 'OK'}")
         update = {"issues": issues, "stage": "executor",
                   "log": [{"node": "executor", "iteration": state["iteration"], "issues": issues}]}

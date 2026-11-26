@@ -12,30 +12,26 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Carregar dados
+# 1. Carregar dados e textos
 df = pd.read_csv(DATA_PATH)
+d = df[(df['bt_gwh'] > 0) & (df['mt_gwh'] > 0)].copy()
 
-# Filtrar concelhos com mt_gwh > 0
-df_filtered = df[(df['mt_gwh'] > 0) & (df['bt_gwh'] > 0)].copy()
-
-# Carregar textos e estatísticas do JSON utilizando DATA_PATH para derivar o caminho correto
-texts_path = DATA_PATH.replace('p2f1_data.csv', 'p2f1_texts.json')
+texts_path = 'data/clean/p2f1_texts.json'
 with open(texts_path, encoding='utf-8') as f:
-    json_data = json.load(f)
+    T = json.load(f)['scatter']
 
-texts = json_data['scatter']
-stats = json_data['stats']
-
-# Ler valores estatísticos diretamente do JSON conforme solicitado
-r_val = stats['r_pearson_log']
-rho_val = stats['rho_spearman']
-n_val = stats['n_concelhos']
-
-# Configuração da figura (Wilke style: limpa, sem elementos decorativos desnecessários)
+# 2. Configuração da figura e layout (Wilke style: limpo, sem moldura superior/direita)
 fig, ax = plt.subplots(figsize=(11, 9))
 
-# Cores exatas solicitadas
-colors = {
+# Espaço reservado para título, subtítulo e rodapé
+fig.subplots_adjust(top=0.85, bottom=0.18, left=0.08, right=0.80)
+
+# Título e subtítulo (Wilke: sem maiúsculas excessivas, alinhados à esquerda)
+fig.suptitle(T['title'], fontsize=14, fontweight='bold', x=0.08, ha='left')
+fig.text(0.08, 0.89, T['subtitle'], fontsize=10, color='#555555', ha='left')
+
+# 3. Cores e regiões (Paleta ColorBrewer / Okabe-Ito amigável a daltónicos)
+cores = {
     'Norte': '#0072B2',
     'Centro': '#E69F00',
     'Lisboa e Vale do Tejo': '#D55E00',
@@ -43,71 +39,75 @@ colors = {
     'Algarve': '#CC79A7'
 }
 
-# Scatter plot por região
-for regiao, color in colors.items():
-    subset = df_filtered[df_filtered['regiao'] == regiao]
-    if not subset.empty:
-        ax.scatter(
-            subset['bt_gwh'], 
-            subset['mt_gwh'], 
-            s=35, 
-            alpha=0.75, 
-            color=color, 
-            label=regiao
-        )
+for regiao, cor in cores.items():
+    subset = d[d['regiao'] == regiao]
+    ax.scatter(
+        subset['bt_gwh'],
+        subset['mt_gwh'],
+        s=35,
+        alpha=0.75,
+        c=cor,
+        label=regiao,
+        edgecolors='none'
+    )
 
-# Escala logarítmica
+# 4. Escalas logarítmicas
 ax.set_xscale('log')
 ax.set_yscale('log')
 
-# Reta de regressão em log-log: np.polyfit(np.log10(x), np.log10(y), 1)
-log_x = np.log10(df_filtered['bt_gwh'])
-log_y = np.log10(df_filtered['mt_gwh'])
-b, a = np.polyfit(log_x, log_y, 1)
+# 5. Reta de regressão em log-log
+log_bt = np.log10(d['bt_gwh'])
+log_mt = np.log10(d['mt_gwh'])
+a, b = np.polyfit(log_bt, log_mt, 1)
 
-# Desenhada ao longo do intervalo de x (10**(a*log10(x)+b))
-x_vals = np.sort(df_filtered['bt_gwh'])
-y_vals = 10**(b * np.log10(x_vals) + a)
-ax.plot(x_vals, y_vals, color='black', linestyle='--', linewidth=1.5, alpha=0.8)
+x_vals = np.array([d['bt_gwh'].min(), d['bt_gwh'].max()])
+y_vals = 10**(a * np.log10(x_vals) + b)
+ax.plot(x_vals, y_vals, linestyle='--', color='#333333', linewidth=1.5, label='Regressão log-log')
 
-# Caixa de texto no canto superior esquerdo com valores arredondados a 2 casas decimais
-stats_text = f"r (log-log) = {r_val:.2f}\nρ (Spearman) = {rho_val:.2f}\nn = {n_val}"
-ax.text(
-    0.03, 0.97, stats_text,
-    transform=ax.transAxes,
-    fontsize=10,
-    verticalalignment='top',
-    bbox=dict(boxstyle='square,pad=0.5', facecolor='white', edgecolor='0.8', alpha=0.9)
+# 6. Caixa de texto com estatísticas (canto superior esquerdo)
+stats = T['stats']
+texto_stats = (
+    f"r (Pearson log-log): {stats['r_pearson_log']:.2f}\n"
+    f"ρ (Spearman): {stats['rho_spearman']:.2f}\n"
+    f"n: {stats['n_concelhos']}"
 )
 
-# Eixos
-ax.set_xlabel('Consumo BT (GWh)', fontsize=11)
-ax.set_ylabel('Consumo MT/AT/MAT (GWh)', fontsize=11)
+ax.text(
+    0.03, 0.95,
+    texto_stats,
+    transform=ax.transAxes,
+    fontsize=9,
+    verticalalignment='top',
+    bbox=dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.8, edgecolor='#cccccc')
+)
 
-# Remover moldura superior e direita (clean plot)
+# 7. Eixos e grelha subtil
+ax.set_xlabel('Consumo BT (GWh)', fontsize=10)
+ax.set_ylabel('Consumo MT/AT/MAT (GWh)', fontsize=10)
+
+ax.grid(True, which='both', linestyle=':', linewidth=0.5, color='#dddddd')
+ax.set_axisbelow(True)
+
+# Remover espinhas superiores e direitas (Wilke)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
-ax.tick_params(top=False, right=False)
+ax.spines['left'].set_color('#333333')
+ax.spines['bottom'].set_color('#333333')
 
-# Legenda fora do gráfico à direita
+# 8. Legenda fora do gráfico (à direita)
 ax.legend(
     title='Região',
-    bbox_to_anchor=(1.02, 1),
+    bbox_to_anchor=(1.05, 1),
     loc='upper left',
     frameon=False,
-    fontsize=10,
-    title_fontsize=11
+    fontsize=9,
+    title_fontsize=10
 )
 
-# Títulos, subtítulos e legenda via texto estruturado com reserva de espaço
-fig.suptitle(texts['title'], fontsize=14, fontweight='bold', x=0.01, ha='left')
-fig.text(0.01, 0.89, texts['subtitle'], fontsize=10, color='0.3', ha='left')
+# 9. Legenda / Nota de rodapé explicativa
+caption_wrapped = textwrap.fill(T['caption'], width=120)
+fig.text(0.08, 0.04, caption_wrapped, fontsize=9, color='#333333', ha='left', va='top', wrap=True)
 
-wrapped_caption = textwrap.fill(texts['caption'], width=120)
-fig.text(0.01, 0.02, wrapped_caption, fontsize=9, color='0.3', ha='left', va='bottom', wrap=True)
-
-# Ajuste de layout para acomodar título, subtítulo e rodapé
-fig.subplots_adjust(left=0.08, right=0.80, top=0.87, bottom=0.12)
-
+# 10. Gravar e fechar
 plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches='tight')
 plt.close()

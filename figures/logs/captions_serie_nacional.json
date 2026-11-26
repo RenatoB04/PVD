@@ -16,7 +16,9 @@
     "amplitude_sazonal_pct": 20.9,
     "periodo_ultimos_12m": "2025-08 a 2026-07",
     "variacao_12m_pct": 3.6,
-    "nota": "p_valor indicativo: a série tem autocorrelação"
+    "nota": "p_valor indicativo: a série tem autocorrelação",
+    "variavel": "consumo mensal total de eletricidade em Portugal continental (GWh)",
+    "metodo": "regressão linear sobre a série dessazonalizada (decomposição STL)"
   },
   "tentativas": [
     {
@@ -24,17 +26,38 @@
       "interpretacao": {
         "direction": "crescente_ou_positiva",
         "strength": "forte",
-        "main_finding": "A série temporal mensal de novembro de 2020 a julho de 2026 apresenta uma tendência global crescente de 1,89% por ano, com um coeficiente de correlação de Pearson de 0,87.",
-        "secondary_finding": "Verifica-se uma sazonalidade com pico em janeiro e vale em abril, registando uma amplitude sazonal de 20,9%.",
+        "main_finding": "O consumo mensal total de eletricidade em Portugal continental (GWh) registou uma tendência crescente de 1.89% por ano entre novembro de 2020 e julho de 2026, com um coeficiente de Pearson de 0.87.",
+        "secondary_finding": "A análise sazonal revela um pico em janeiro e um vale em abril, com uma amplitude sazonal de 20.9%.",
         "caveats": [
           "p_valor indicativo: a série tem autocorrelação",
-          "correlação não implica causalidade"
+          "período curto"
         ]
       },
       "texto": {
-        "title": "Tendência crescente da energia com variação anual de 1,89%",
-        "subtitle": "Evolução mensal da energia em GWh entre novembro de 2020 e julho de 2026.",
-        "caption": "A série temporal apresenta uma tendência global crescente de 1,89% por ano, com uma correlação de Pearson de 0,87. Observa-se um pico sazonal em janeiro e um vale em abril, com uma amplitude de 20,9% e uma variação nos últimos doze meses de 3,6%. Nota-se que a autocorrelação da série torna o p-valor indicativo e a correlação não implica causalidade."
+        "title": "Consumo de eletricidade cresceu 1,9% ao ano entre novembro de 2020 e julho de 2026",
+        "subtitle": "Evolução do consumo mensal total de eletricidade em Portugal continental (GWh), 2020-11 a 2026-07, por regressão linear sobre a série dessazonalizada (decomposição STL)",
+        "caption": "O consumo mensal registou uma tendência crescente de 1,9% por ano, com uma média de 3822,2 GWh. Observa-se um pico sazonal em janeiro e um vale em abril, com uma amplitude de 20,9%. Nota-se que o p_valor é indicativo devido à autocorrelação e o período analisado é curto."
+      },
+      "problemas": [
+        "Subtítulo com 168 caracteres (máx. 140)."
+      ]
+    },
+    {
+      "tentativa": 2,
+      "interpretacao": {
+        "direction": "crescente_ou_positiva",
+        "strength": "forte",
+        "main_finding": "O consumo mensal total de eletricidade em Portugal continental (GWh) registou uma tendência crescente de 1,89% ao ano entre novembro de 2020 e julho de 2026, com uma média de 3822,2 GWh por mês.",
+        "secondary_finding": "A análise sazonal indica um pico em janeiro e um vale em abril, com uma amplitude sazonal de 20,9%.",
+        "caveats": [
+          "p_valor indicativo: a série tem autocorrelação",
+          "período curto"
+        ]
+      },
+      "texto": {
+        "title": "Tendência crescente do consumo de eletricidade entre 2020 e 2026",
+        "subtitle": "Consumo mensal em Portugal continental, 2020-11 a 2026-07, por regressão linear",
+        "caption": "O consumo mensal total de eletricidade em Portugal continental (GWh) registou uma média de 3822,2 GWh por mês, com uma variação de 72,07 GWh por ano e um pico sazonal em janeiro. A análise apresenta uma amplitude sazonal de 20,9% e uma variação de 3,6% nos últimos 12 meses. Nota: período curto e p-valor indicativo devido a autocorrelação."
       },
       "problemas": []
     }

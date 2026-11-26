@@ -51,6 +51,10 @@ comparação entre regiões, a região com maior e a com menor tendência.
 - caveats: limitações reais (autocorrelação e p-valor indicativo, correlação não \
 implica causalidade, período curto).
 - Não atribuas causas externas (clima, pandemia, preços) que não estejam nos dados.
+- Usa os campos 'variavel', 'variavel_x', 'variavel_y' e 'metodo' (se existirem) para \
+nomear o que está representado e o método usado.
+- Na correlação em escala logarítmica, refere também o declive_loglog (acima de 1: a \
+variável y cresce mais do que proporcionalmente a x).
 - Escreve em português europeu."""
 
 HUMAN_1 = """Tipo de gráfico: {kind}
@@ -69,6 +73,8 @@ ressalva, e a limitação principal.
 casa decimal, com vírgula decimal e sem separador de milhares. Não escrevas limiares \
 de p-valor nem números que não estejam nas estatísticas.
 - Não inventes causas nem uses a palavra 'significativo' sem p_valor abaixo de 0,05.
+- O título e o subtítulo nomeiam a(s) variável(eis) representada(s) (campos 'variavel', \
+'variavel_x', 'variavel_y') e, na série temporal, o método (campo 'metodo').
 - Sem aspas nem quebras de linha."""
 
 HUMAN_2 = """Tipo de gráfico: {kind}

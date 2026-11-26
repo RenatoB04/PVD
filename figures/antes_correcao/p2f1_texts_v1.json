@@ -1,0 +1,113 @@
+{
+  "scatter": {
+    "title": "Forte correlação positiva entre as variáveis analisadas",
+    "subtitle": "Relação em escala logarítmica para 276 concelhos",
+    "caption": "Verifica-se uma correlação positiva forte com um coeficiente de Pearson de 0,82 e um R2 de 0,68. A associação reflete em grande parte a dimensão do concelho. A correlação não implica causalidade e a análise pode ser influenciada por efeitos de escala.",
+    "reading": {
+      "direction": "crescente_ou_positiva",
+      "strength": "forte",
+      "main_finding": "Verifica-se uma correlação positiva forte entre as variáveis analisadas, com um coeficiente de Pearson de 0.82 em escala logarítmica e um R2 de 0.68.",
+      "secondary_finding": "A associação observada reflete em grande parte a dimensão do concelho.",
+      "caveats": [
+        "A correlação não implica causalidade.",
+        "O p-valor é indicativo.",
+        "A análise pode ser influenciada por efeitos de escala e dimensão territorial."
+      ]
+    },
+    "tentativas": 1,
+    "stats": {
+      "n_concelhos": 276,
+      "n_excluidos_mt_zero": 2,
+      "r_pearson_log": 0.82,
+      "r2_log": 0.68,
+      "p_valor_pearson": 0.0,
+      "rho_spearman": 0.84,
+      "declive_loglog": 1.29,
+      "r_pearson_bruto": 0.7,
+      "pct_concelhos_mt_maior_que_bt": 23.9,
+      "nota": "a associação reflete em grande parte a dimensão do concelho"
+    }
+  },
+  "serie_nacional": {
+    "title": "Tendência crescente da energia com variação anual de 1,89%",
+    "subtitle": "Evolução mensal da energia em GWh entre novembro de 2020 e julho de 2026.",
+    "caption": "A série temporal apresenta uma tendência global crescente de 1,89% por ano, com uma correlação de Pearson de 0,87. Observa-se um pico sazonal em janeiro e um vale em abril, com uma amplitude de 20,9% e uma variação nos últimos doze meses de 3,6%. Nota-se que a autocorrelação da série torna o p-valor indicativo e a correlação não implica causalidade.",
+    "reading": {
+      "direction": "crescente_ou_positiva",
+      "strength": "forte",
+      "main_finding": "A série temporal mensal de novembro de 2020 a julho de 2026 apresenta uma tendência global crescente de 1,89% por ano, com um coeficiente de correlação de Pearson de 0,87.",
+      "secondary_finding": "Verifica-se uma sazonalidade com pico em janeiro e vale em abril, registando uma amplitude sazonal de 20,9%.",
+      "caveats": [
+        "p_valor indicativo: a série tem autocorrelação",
+        "correlação não implica causalidade"
+      ]
+    },
+    "tentativas": 1,
+    "stats": {
+      "periodo": "2020-11 a 2026-07",
+      "n_meses": 69,
+      "media_mensal_gwh": 3822.2,
+      "variacao_gwh_mes_por_ano": 72.07,
+      "tendencia_pct_por_ano": 1.89,
+      "r_pearson": 0.87,
+      "r2": 0.76,
+      "p_valor": 0.0,
+      "rho_spearman": 0.88,
+      "mes_pico_sazonal": "janeiro",
+      "mes_vale_sazonal": "abril",
+      "amplitude_sazonal_pct": 20.9,
+      "periodo_ultimos_12m": "2025-08 a 2026-07",
+      "variacao_12m_pct": 3.6,
+      "nota": "p_valor indicativo: a série tem autocorrelação"
+    }
+  },
+  "regioes": {
+    "title": "Algarve lidera crescimento anual no consumo de eletricidade com 4,01%",
+    "subtitle": "Evolução e tendência do consumo de eletricidade por região no período analisado",
+    "caption": "Todas as regiões apresentam uma tendência de crescimento positivo no consumo de eletricidade, variando entre 0,91% ao ano no Centro e 4,01% ao ano no Algarve. Destaca-se a variação de 12 meses de 11,0% no Alentejo. Estas conclusões baseiam-se num período curto de observação, sendo necessárias análises adicionais.",
+    "reading": {
+      "direction": "crescente_ou_positiva",
+      "strength": "nao_aplicavel",
+      "main_finding": "Todas as regiões apresentam uma tendência de crescimento positivo no consumo de eletricidade, variando entre 0,91% ao ano no Centro e 4,01% ao ano no Algarve.",
+      "secondary_finding": "A região com maior tendência foi o Algarve (4,01% ao ano) e a com menor tendência foi o Centro (0,91% ao ano).",
+      "caveats": [
+        "Período curto de observação",
+        "Autocorrelação e p-valor indicativo",
+        "Correlação não implica causalidade"
+      ]
+    },
+    "tentativas": 1,
+    "stats": {
+      "Alentejo": {
+        "tendencia_pct_por_ano": 2.47,
+        "r2": 0.33,
+        "variacao_12m_pct": 11.0,
+        "amplitude_sazonal_pct": 40.5
+      },
+      "Algarve": {
+        "tendencia_pct_por_ano": 4.01,
+        "r2": 0.81,
+        "variacao_12m_pct": 4.9,
+        "amplitude_sazonal_pct": 36.7
+      },
+      "Centro": {
+        "tendencia_pct_por_ano": 0.91,
+        "r2": 0.31,
+        "variacao_12m_pct": 1.6,
+        "amplitude_sazonal_pct": 20.1
+      },
+      "Lisboa e Vale do Tejo": {
+        "tendencia_pct_por_ano": 2.11,
+        "r2": 0.83,
+        "variacao_12m_pct": 3.1,
+        "amplitude_sazonal_pct": 19.8
+      },
+      "Norte": {
+        "tendencia_pct_por_ano": 2.05,
+        "r2": 0.74,
+        "variacao_12m_pct": 4.6,
+        "amplitude_sazonal_pct": 26.7
+      }
+    }
+  }
+}

@@ -11,7 +11,9 @@
     "declive_loglog": 1.29,
     "r_pearson_bruto": 0.7,
     "pct_concelhos_mt_maior_que_bt": 23.9,
-    "nota": "a associação reflete em grande parte a dimensão do concelho"
+    "nota": "a associação reflete em grande parte a dimensão do concelho",
+    "variavel_x": "consumo anual de eletricidade em baixa tensão (BT), por concelho, em 2025",
+    "variavel_y": "consumo anual de eletricidade em MT/AT/MAT, por concelho, em 2025"
   },
   "tentativas": [
     {
@@ -19,18 +21,17 @@
       "interpretacao": {
         "direction": "crescente_ou_positiva",
         "strength": "forte",
-        "main_finding": "Verifica-se uma correlação positiva forte entre as variáveis analisadas, com um coeficiente de Pearson de 0.82 em escala logarítmica e um R2 de 0.68.",
-        "secondary_finding": "A associação observada reflete em grande parte a dimensão do concelho.",
+        "main_finding": "Existe uma correlação forte e positiva (r_pearson_log de 0,82) entre o consumo de eletricidade em baixa tensão e o consumo em MT/AT/MAT por concelho em 2025, com um declive log-log de 1,29.",
+        "secondary_finding": "A associação reflete em grande parte a dimensão do concelho.",
         "caveats": [
-          "A correlação não implica causalidade.",
-          "O p-valor é indicativo.",
-          "A análise pode ser influenciada por efeitos de escala e dimensão territorial."
+          "A correlação não implica causalidade",
+          "A associação reflete em grande parte a dimensão do concelho"
         ]
       },
       "texto": {
-        "title": "Forte correlação positiva entre as variáveis analisadas",
-        "subtitle": "Relação em escala logarítmica para 276 concelhos",
-        "caption": "Verifica-se uma correlação positiva forte com um coeficiente de Pearson de 0,82 e um R2 de 0,68. A associação reflete em grande parte a dimensão do concelho. A correlação não implica causalidade e a análise pode ser influenciada por efeitos de escala."
+        "title": "Forte correlação entre consumo em baixa tensão e em MT/AT/MAT",
+        "subtitle": "Consumo anual de eletricidade em baixa tensão (BT) e consumo em MT/AT/MAT, por concelho, em 2025",
+        "caption": "Existe uma correlação forte e positiva com um valor de r_pearson_log de 0,82 e um declive log-log de 1,29 entre as variáveis. Em 23,9 por cento dos concelhos, o consumo em MT/AT/MAT é superior ao em baixa tensão. A associação reflete em grande parte a dimensão do concelho e a correlação não implica causalidade."
       },
       "problemas": []
     }
