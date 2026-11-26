@@ -1,0 +1,75 @@
+{
+  "name": "p2f1_scatter_correlacao",
+  "spec": "Scatterplot dos concelhos com mt_gwh > 0 (figsize (11, 9)): x = bt_gwh, y = mt_gwh, ambos em escala logarítmica (ax.set_xscale('log'), ax.set_yscale('log')). Um ax.scatter por região (s=35, alpha=0.75), com exatamente estas cores: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Reta de regressão em log-log: np.polyfit(np.log10(x), np.log10(y), 1), desenhada a tracejado preto ao longo do intervalo de x (10**(a*log10(x)+b)). Caixa de texto dentro do gráfico (canto superior esquerdo, fundo branco semitransparente) com os valores lidos de stats no mesmo JSON: r de Pearson (log-log) = stats['r_pearson_log'], rho de Spearman = stats['rho_spearman'] e n = stats['n_concelhos'] (2 casas decimais nos coeficientes). Eixos 'Consumo BT (GWh)' e 'Consumo MT/AT/MAT (GWh)'. Legenda das regiões FORA do gráfico (bbox_to_anchor, à direita). Os dados são o ano de 2025.\nTEXTOS: o título, o subtítulo e a legenda NÃO se escrevem à mão. Lê-os do ficheiro 'data/clean/p2f1_texts.json' com json.load(open(caminho, encoding='utf-8')); chave 'scatter', campos 'title', 'subtitle' e 'caption'. Layout: título com fig.suptitle (fontsize 14, bold, x=0.01, ha='left'); subtítulo logo abaixo com fig.text (fontsize 10, cinzento); legenda no rodapé com fig.text e textwrap.fill(width=120), fontsize 9. Reserva espaço para estes três blocos (fig.subplots_adjust com top e bottom adequados) sem sobreposição.\nPara referência, o conteúdo atual é: título='Forte correlação positiva entre as variáveis analisadas'; subtítulo='Relação em escala logarítmica para 276 concelhos'; legenda='Verifica-se uma correlação positiva forte com um coeficiente de Pearson de 0,82 e um R2 de 0,68. A associação reflete em grande parte a dimensão do concelho. A correlação não implica causalidade e a análise pode ser influenciada por efeitos de escala.'",
+  "status": "failed",
+  "iteracoes": 4,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 101
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": [
+        "Calcula a reta de regressão em log-log (np.polyfit) e lê r e rho de stats no JSON."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 105
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 2,
+      "issues": [
+        "O código falhou ao executar. Traceback:\nTraceback (most recent call last):\n  File \"C:\\Users\\paulobastos\\Documents\\pvd\\figures\\code\\p2f1_scatter_correlacao.py\", line 24, in <module>\n    json_data = json.load(f)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 298, in load\n    return loads(fp.read(),\n        cls=cls, object_hook=object_hook,\n        parse_float=parse_float, parse_int=parse_int,\n        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 345, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 363, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n"
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 3,
+      "linhas": 105
+    },
+    {
+      "node": "validator",
+      "iteration": 3,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 3,
+      "issues": [
+        "O código falhou ao executar. Traceback:\nTraceback (most recent call last):\n  File \"C:\\Users\\paulobastos\\Documents\\pvd\\figures\\code\\p2f1_scatter_correlacao.py\", line 24, in <module>\n    json_data = json.load(f)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 298, in load\n    return loads(fp.read(),\n        cls=cls, object_hook=object_hook,\n        parse_float=parse_float, parse_int=parse_int,\n        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 345, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 363, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n"
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 4,
+      "linhas": 105
+    },
+    {
+      "node": "validator",
+      "iteration": 4,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 4,
+      "issues": [
+        "O código falhou ao executar. Traceback:\nTraceback (most recent call last):\n  File \"C:\\Users\\paulobastos\\Documents\\pvd\\figures\\code\\p2f1_scatter_correlacao.py\", line 24, in <module>\n    json_data = json.load(f)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 298, in load\n    return loads(fp.read(),\n        cls=cls, object_hook=object_hook,\n        parse_float=parse_float, parse_int=parse_int,\n        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py\", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 345, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\paulobastos\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py\", line 363, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)\n"
+      ]
+    },
+    {
+      "node": "give_up",
+      "status": "failed"
+    }
+  ]
+}

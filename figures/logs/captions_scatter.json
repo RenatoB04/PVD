@@ -1,0 +1,38 @@
+{
+  "name": "scatter",
+  "kind": "correlacao",
+  "stats": {
+    "n_concelhos": 276,
+    "n_excluidos_mt_zero": 2,
+    "r_pearson_log": 0.82,
+    "r2_log": 0.68,
+    "p_valor_pearson": 0.0,
+    "rho_spearman": 0.84,
+    "declive_loglog": 1.29,
+    "r_pearson_bruto": 0.7,
+    "pct_concelhos_mt_maior_que_bt": 23.9,
+    "nota": "a associação reflete em grande parte a dimensão do concelho"
+  },
+  "tentativas": [
+    {
+      "tentativa": 1,
+      "interpretacao": {
+        "direction": "crescente_ou_positiva",
+        "strength": "forte",
+        "main_finding": "Verifica-se uma correlação positiva forte entre as variáveis analisadas, com um coeficiente de Pearson de 0.82 em escala logarítmica e um R2 de 0.68.",
+        "secondary_finding": "A associação observada reflete em grande parte a dimensão do concelho.",
+        "caveats": [
+          "A correlação não implica causalidade.",
+          "O p-valor é indicativo.",
+          "A análise pode ser influenciada por efeitos de escala e dimensão territorial."
+        ]
+      },
+      "texto": {
+        "title": "Forte correlação positiva entre as variáveis analisadas",
+        "subtitle": "Relação em escala logarítmica para 276 concelhos",
+        "caption": "Verifica-se uma correlação positiva forte com um coeficiente de Pearson de 0,82 e um R2 de 0,68. A associação reflete em grande parte a dimensão do concelho. A correlação não implica causalidade e a análise pode ser influenciada por efeitos de escala."
+      },
+      "problemas": []
+    }
+  ]
+}

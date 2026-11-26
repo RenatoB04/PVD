@@ -1,0 +1,30 @@
+{
+  "name": "p2f1_serie_nacional",
+  "spec": "Gráfico de linhas (figsize (12, 7.5)) do consumo mensal total nacional (total_gwh), 2020-11 a 2026-07. Camadas: (1) série observada, linha fina cinzenta (#999999) com pequenos pontos; (2) média móvel centrada de 12 meses (rolling(12, center=True)), linha #0072B2 de espessura 2; (3) curva LOWESS (statsmodels.nonparametric.smoothers_lowess.lowess com frac=0.3, x = 0..n-1, return_sorted=False), linha #D55E00 de espessura 2.5. Eixo x com datas (uma marca por ano, formato %Y), rótulo 'Data'; eixo y 'Consumo mensal (GWh)'. Grelha horizontal suave. Legenda das três linhas ('Observado', 'Média móvel 12 meses', 'LOWESS') FORA da área do gráfico, por baixo (bbox_to_anchor).\nTEXTOS: o título, o subtítulo e a legenda NÃO se escrevem à mão. Lê-os do ficheiro 'data/clean/p2f1_texts.json' com json.load(open(caminho, encoding='utf-8')); chave 'serie_nacional', campos 'title', 'subtitle' e 'caption'. Layout: título com fig.suptitle (fontsize 14, bold, x=0.01, ha='left'); subtítulo logo abaixo com fig.text (fontsize 10, cinzento); legenda no rodapé com fig.text e textwrap.fill(width=120), fontsize 9. Reserva espaço para estes três blocos (fig.subplots_adjust com top e bottom adequados) sem sobreposição.\nPara referência, o conteúdo atual é: título='Tendência crescente da energia com variação anual de 1,89%'; subtítulo='Evolução mensal da energia em GWh entre novembro de 2020 e julho de 2026.'; legenda='A série temporal apresenta uma tendência global crescente de 1,89% por ano, com uma correlação de Pearson de 0,87. Observa-se um pico sazonal em janeiro e um vale em abril, com uma amplitude de 20,9% e uma variação nos últimos doze meses de 3,6%. Nota-se que a autocorrelação da série torna o p-valor indicativo e a correlação não implica causalidade.'",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 97
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "regioes",
+  "kind": "comparacao_regioes",
+  "stats": {
+    "Alentejo": {
+      "tendencia_pct_por_ano": 2.47,
+      "r2": 0.33,
+      "variacao_12m_pct": 11.0,
+      "amplitude_sazonal_pct": 40.5
+    },
+    "Algarve": {
+      "tendencia_pct_por_ano": 4.01,
+      "r2": 0.81,
+      "variacao_12m_pct": 4.9,
+      "amplitude_sazonal_pct": 36.7
+    },
+    "Centro": {
+      "tendencia_pct_por_ano": 0.91,
+      "r2": 0.31,
+      "variacao_12m_pct": 1.6,
+      "amplitude_sazonal_pct": 20.1
+    },
+    "Lisboa e Vale do Tejo": {
+      "tendencia_pct_por_ano": 2.11,
+      "r2": 0.83,
+      "variacao_12m_pct": 3.1,
+      "amplitude_sazonal_pct": 19.8
+    },
+    "Norte": {
+      "tendencia_pct_por_ano": 2.05,
+      "r2": 0.74,
+      "variacao_12m_pct": 4.6,
+      "amplitude_sazonal_pct": 26.7
+    }
+  },
+  "tentativas": [
+    {
+      "tentativa": 1,
+      "interpretacao": {
+        "direction": "crescente_ou_positiva",
+        "strength": "nao_aplicavel",
+        "main_finding": "Todas as regiões apresentam uma tendência de crescimento positivo no consumo de eletricidade, variando entre 0,91% ao ano no Centro e 4,01% ao ano no Algarve.",
+        "secondary_finding": "A região com maior tendência foi o Algarve (4,01% ao ano) e a com menor tendência foi o Centro (0,91% ao ano).",
+        "caveats": [
+          "Período curto de observação",
+          "Autocorrelação e p-valor indicativo",
+          "Correlação não implica causalidade"
+        ]
+      },
+      "texto": {
+        "title": "Algarve lidera crescimento anual no consumo de eletricidade com 4,01%",
+        "subtitle": "Evolução e tendência do consumo de eletricidade por região no período analisado",
+        "caption": "Todas as regiões apresentam uma tendência de crescimento positivo no consumo de eletricidade, variando entre 0,91% ao ano no Centro e 4,01% ao ano no Algarve. Destaca-se a variação de 12 meses de 11,0% no Alentejo. Estas conclusões baseiam-se num período curto de observação, sendo necessárias análises adicionais."
+      },
+      "problemas": []
+    }
+  ]
+}

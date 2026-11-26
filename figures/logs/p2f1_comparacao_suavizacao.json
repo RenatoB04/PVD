@@ -1,0 +1,60 @@
+{
+  "name": "p2f1_comparacao_suavizacao",
+  "spec": "Figura com 3 painéis lado a lado (1 linha, 3 colunas, figsize (16, 5.5), sharey=True). Cada painel mostra a série mensal nacional (total_gwh) em cinzento claro (#BBBBBB) e um modelo sobreposto (espessura 2.5): (1) 'Tendência linear' (np.polyfit grau 1 sobre o índice 0..n-1), cor #009E73; (2) 'Média móvel centrada de 12 meses' (rolling(12, center=True)), cor #0072B2; (3) 'LOWESS (frac = 0,3)' (statsmodels lowess, frac=0.3, return_sorted=False), cor #D55E00. Título de cada painel = nome do modelo; título geral (fig.suptitle) 'Três modelos aplicados ao consumo mensal nacional'. Eixo y 'Consumo mensal (GWh)' só no primeiro painel; eixo x com uma marca por ano (formato %Y). Sem legendas (os títulos dos painéis chegam).",
+  "status": "failed",
+  "iteracoes": 4,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 72
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": [
+        "Usa np.polyfit, rolling(12, center=True) e lowess."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 72
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
+      "issues": [
+        "Usa np.polyfit, rolling(12, center=True) e lowess."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 3,
+      "linhas": 72
+    },
+    {
+      "node": "validator",
+      "iteration": 3,
+      "issues": [
+        "Usa np.polyfit, rolling(12, center=True) e lowess."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 4,
+      "linhas": 72
+    },
+    {
+      "node": "validator",
+      "iteration": 4,
+      "issues": [
+        "Usa np.polyfit, rolling(12, center=True) e lowess."
+      ]
+    },
+    {
+      "node": "give_up",
+      "status": "failed"
+    }
+  ]
+}

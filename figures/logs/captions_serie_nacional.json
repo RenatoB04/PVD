@@ -1,0 +1,42 @@
+{
+  "name": "serie_nacional",
+  "kind": "serie_temporal",
+  "stats": {
+    "periodo": "2020-11 a 2026-07",
+    "n_meses": 69,
+    "media_mensal_gwh": 3822.2,
+    "variacao_gwh_mes_por_ano": 72.07,
+    "tendencia_pct_por_ano": 1.89,
+    "r_pearson": 0.87,
+    "r2": 0.76,
+    "p_valor": 0.0,
+    "rho_spearman": 0.88,
+    "mes_pico_sazonal": "janeiro",
+    "mes_vale_sazonal": "abril",
+    "amplitude_sazonal_pct": 20.9,
+    "periodo_ultimos_12m": "2025-08 a 2026-07",
+    "variacao_12m_pct": 3.6,
+    "nota": "p_valor indicativo: a série tem autocorrelação"
+  },
+  "tentativas": [
+    {
+      "tentativa": 1,
+      "interpretacao": {
+        "direction": "crescente_ou_positiva",
+        "strength": "forte",
+        "main_finding": "A série temporal mensal de novembro de 2020 a julho de 2026 apresenta uma tendência global crescente de 1,89% por ano, com um coeficiente de correlação de Pearson de 0,87.",
+        "secondary_finding": "Verifica-se uma sazonalidade com pico em janeiro e vale em abril, registando uma amplitude sazonal de 20,9%.",
+        "caveats": [
+          "p_valor indicativo: a série tem autocorrelação",
+          "correlação não implica causalidade"
+        ]
+      },
+      "texto": {
+        "title": "Tendência crescente da energia com variação anual de 1,89%",
+        "subtitle": "Evolução mensal da energia em GWh entre novembro de 2020 e julho de 2026.",
+        "caption": "A série temporal apresenta uma tendência global crescente de 1,89% por ano, com uma correlação de Pearson de 0,87. Observa-se um pico sazonal em janeiro e um vale em abril, com uma amplitude de 20,9% e uma variação nos últimos doze meses de 3,6%. Nota-se que a autocorrelação da série torna o p-valor indicativo e a correlação não implica causalidade."
+      },
+      "problemas": []
+    }
+  ]
+}
