@@ -11,15 +11,11 @@ import matplotlib.patches as mpatches
 import pandas as pd
 import squarify
 
-# Ler os dados
+# 1. Ler os dados
 df = pd.read_csv(DATA_PATH)
 
-# Agrupar e calcular totais por região e distrito
-df_regiao = df.groupby('regiao')['total_gwh'].sum().reset_index()
-df_regiao = df_regiao.sort_values(by='total_gwh', ascending=False).reset_index(drop=True)
-
-# Cores especificadas para as regiões
-cores_regiao = {
+# 2. Paleta de cores oficial para as regiões
+cores_regioes = {
     'Norte': '#0072B2',
     'Centro': '#E69F00',
     'Lisboa e Vale do Tejo': '#D55E00',
@@ -27,67 +23,113 @@ cores_regiao = {
     'Algarve': '#CC79A7'
 }
 
-fig, ax = plt.subplots(figsize=(10, 6))
+# 3. Preparar a figura (figsize aproximado 11x6 para dar espaço à legenda e anotações)
+fig, ax = plt.subplots(figsize=(11, 6))
 
-W, H = 100.0, 100.0
+W, H = 100, 100
 
-# Normalizar e calcular retângulos para as regiões
-totais_regiao = df_regiao['total_gwh'].tolist()
-rects_reg = squarify.squarify(squarify.normalize_sizes(totais_regiao, W, H), 0, 0, W, H)
+# Agrupar por região e ordenar decrescentemente por total_gwh
+totais_regiao = df.groupby('regiao')['total_gwh'].sum().sort_values(ascending=False)
+regioes_ordenadas = totais_regiao.index.tolist()
 
-# Iterar sobre cada região para desenhar o nível 2 (distritos)
-for i, r in enumerate(rects_reg):
-    reg_nome = df_regiao.loc[i, 'regiao']
-    cor_base = cores_regiao.get(reg_nome, '#999999')
+# Normalizar e calcular retângulos das regiões
+norm_reg = squarify.normalize_sizes(totais_regiao.values, W, H)
+rects_reg = squarify.squarify(norm_reg, 0, 0, W, H)
+
+# Mapear retângulos das regiões por nome
+regiao_rects_map = {reg: rect for reg, rect in zip(regioes_ordenadas, rects_reg)}
+
+# Preparar dados para anotações externas (pequenos retângulos)
+anotacoes_externas = []
+contador_pequenos = 1
+
+# Desenhar as regiões e os distritos
+for regiao in regioes_ordenadas:
+    r = regiao_rects_map[regiao]
     
     # Desenhar contorno grosso da região
-    reg_patch = mpatches.Rectangle(
+    rect_regiao_patch = plt.Rectangle(
         (r['x'], r['y']), r['dx'], r['dy'],
-        linewidth=2, edgecolor='white', facecolor='none', zorder=3
+        linewidth=2.5, edgecolor='white', facecolor='none', zorder=3
     )
-    ax.add_patch(reg_patch)
+    ax.add_patch(rect_regiao_patch)
     
     # Filtrar distritos da região e ordenar por valor decrescente
-    df_dist = df[df['regiao'] == reg_nome].sort_values(by='total_gwh', ascending=False).reset_index(drop=True)
+    df_reg = df[df['regiao'] == regiao].sort_values(by='total_gwh', ascending=False)
     
-    valores_dist = df_dist['total_gwh'].tolist()
-    if sum(valores_dist) > 0:
+    valores_dist = df_reg['total_gwh'].values
+    distritos = df_reg['distrito'].values
+    
+    if len(valores_dist) > 0 and sum(valores_dist) > 0:
         norm_dist = squarify.normalize_sizes(valores_dist, r['dx'], r['dy'])
         rects_dist = squarify.squarify(norm_dist, r['x'], r['y'], r['dx'], r['dy'])
         
-        for j, rd in enumerate(rects_dist):
-            dist_nome = df_dist.loc[j, 'distrito']
-            val = df_dist.loc[j, 'total_gwh']
+        for d_nome, val, rd in zip(distritos, valores_dist, rects_dist):
+            area = rd['dx'] * rd['dy']
+            cor = cores_regioes.get(regiao, '#999999')
             
             # Retângulo do distrito
-            dist_patch = mpatches.Rectangle(
+            rect_dist_patch = plt.Rectangle(
                 (rd['x'], rd['y']), rd['dx'], rd['dy'],
-                linewidth=0.8, edgecolor='white', facecolor=cor_base, alpha=0.85, zorder=2
+                linewidth=0.8, edgecolor='white', facecolor=cor, zorder=1
             )
-            ax.add_patch(dist_patch)
+            ax.add_patch(rect_dist_patch)
             
-            # Etiqueta dentro do retângulo se houver espaço suficiente
-            if rd['dx'] > 8 and rd['dy'] > 8:
-                texto = f"{dist_nome}\n{val:.0f} GWh"
+            # Decisão de rotulagem baseada na área
+            cx = rd['x'] + rd['dx'] / 2
+            cy = rd['y'] + rd['dy'] / 2
+            
+            if area >= 200:
+                # Escrever nome e valor dentro do retângulo
+                texto = f"{d_nome}\n{val:.0f} GWh"
                 ax.text(
-                    rd['x'] + rd['dx'] / 2, rd['y'] + rd['dy'] / 2,
-                    texto, color='white', weight='bold', fontsize=8,
-                    ha='center', va='center', zorder=4
+                    cx, cy, texto,
+                    ha='center', va='center', fontsize=8, color='white',
+                    weight='bold', zorder=2, wrap=True
                 )
+            else:
+                # Escrever número e guardar para caixa de texto externa
+                ax.text(
+                    cx, cy, str(contador_pequenos),
+                    ha='center', va='center', fontsize=7, color='white',
+                    weight='bold', zorder=2
+                )
+                anotacoes_externas.append(f"{contador_pequenos} = {d_nome} ({val:.0f} GWh)")
+                contador_pequenos += 1
 
-# Configurações finais do gráfico
+# Configurações de eixos e limites
 ax.set_xlim(0, W)
 ax.set_ylim(0, H)
 ax.set_axis_off()
 
-# Criar legenda para as regiões usando mpatches corretamente
+# Título curto e informativo
+ax.set_title("Consumo de energia por região e distrito em 2025 (GWh)", fontsize=13, pad=12, weight='bold')
+
+# Legenda das regiões fora da área do treemap (à direita) - ordem estritamente correspondente a regioes_ordenadas
 patches_legenda = [
-    mpatches.Patch(color=cor, label=reg) 
-    for reg, cor in cores_regiao.items() if reg in df_regiao['regiao'].values
+    mpatches.Patch(color=cores_regioes[reg], label=reg)
+    for reg in regioes_ordenadas if reg in cores_regioes
 ]
-ax.legend(handles=patches_legenda, loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=len(patches_legenda), frameon=False)
 
-plt.title("Consumo de eletricidade por região e distrito (2025)", fontsize=14, weight='bold', pad=15)
+legenda = ax.legend(
+    handles=patches_legenda,
+    title="Regiões",
+    loc="upper left",
+    bbox_to_anchor=(1.02, 1.0),
+    frameon=False
+)
 
+# Adicionar caixa de texto com os distritos pequenos abaixo da legenda
+if anotacoes_externas:
+    texto_caixa = "Distritos de pequena área:\n" + "\n".join(anotacoes_externas)
+    ax.text(
+        1.02, 0.65, texto_caixa,
+        transform=ax.transAxes,
+        fontsize=7,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor='white', edgecolor='#cccccc', alpha=0.9)
+    )
+
+# Gravar a figura
 plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
 plt.close()

@@ -1,5 +1,8 @@
 """Utilitários partilhados: caminhos e LLM."""
 import os
+import warnings
+warnings.filterwarnings("ignore", message=".*fixed sampling defaults.*")
+
 from pathlib import Path
 
 from dotenv import load_dotenv

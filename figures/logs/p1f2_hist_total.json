@@ -1,32 +1,42 @@
 {
   "name": "p1f2_hist_total",
-  "spec": "Pergunta analítica: Como se distribui o consumo anual total (total_gwh) entre os 278 concelhos?\nGeometria OBRIGATÓRIA: dot_plot (escolhida por análise de cardinalidade e volume).\nColunas: categoria = concelho; 2.ª categoria = -; valor = total_gwh.\nMostrar apenas as 40 categorias de concelho com maior valor total e indicá-lo no título ou numa nota.\nUsar escala logarítmica (ver instruções da geometria) e indicá-la no rótulo do eixo.\nInstruções da geometria: Dot plot de Cleveland: uma categoria por linha no eixo y, ordenadas por valor (maior no topo), um ponto por categoria (ax.scatter) com uma linha horizontal ténue (ax.hlines) do eixo até ao ponto, cor única, grelha vertical suave. NÃO uses barras.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "spec": "Pergunta analítica: Qual é a forma da distribuição do consumo anual total (total_gwh) dos 278 concelhos (assimetria, caudas, moda), sem comparar concelhos individuais?\nGeometria OBRIGATÓRIA: histogram_density (escolhida por análise de cardinalidade e volume).\nColunas: categoria = -; 2.ª categoria = -; valor = total_gwh.\nUsar escala logarítmica (ver instruções da geometria) e indicá-la no rótulo do eixo.\nInstruções da geometria: Histograma em densidade (não contagem) com curva KDE sobreposta (sns.histplot(..., stat='density', kde=True)); eixo y 'Densidade'; 25 a 40 bins; linha vertical tracejada na mediana, com legenda. Se log_scale=true, trabalha em log10(valor) e rotula o eixo x 'log10 do consumo (GWh)' (indica nota com o valor original da mediana).\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo. O rótulo do eixo do valor (total_gwh) usa a unidade 'GWh' e nenhuma outra. Qualquer legenda fica FORA da área dos dados (bbox_to_anchor ou sns.move_legend) e nunca tapa pontos, barras ou células.",
   "status": "approved",
-  "iteracoes": 1,
+  "iteracoes": 2,
   "eventos": [
     {
       "node": "generator",
       "iteration": 1,
-      "linhas": 93
+      "linhas": 58
     },
     {
       "node": "validator",
       "iteration": 1,
+      "issues": [
+        "A legenda pode tapar dados. Coloca-a fora da área do gráfico (bbox_to_anchor=(1.02, 1) com loc='upper left', ou sns.move_legend) e usa bbox_inches='tight' no savefig."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 57
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
       "issues": []
     },
     {
       "node": "executor",
-      "iteration": 1,
+      "iteration": 2,
       "issues": []
     },
     {
       "node": "critic",
-      "iteration": 1,
+      "iteration": 2,
       "approved": true,
       "severe": [],
-      "minor": [
-        "As linhas horizontais começam num valor fixo inferior ao eixo (xmin=valores.min() * 0.8) em vez de começarem no eixo vertical y=0, o que contradiz a instrução do dot plot de Cleveland."
-      ]
+      "minor": []
     }
   ]
 }

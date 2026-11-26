@@ -1,15 +1,16 @@
 {
   "name": "p1f2_dist_regiao",
-  "pergunta": "Como se distribui a quota de baixa tensão (quota_bt_pct) dos concelhos em cada uma das 5 regiões?",
+  "pergunta": "Compara a mediana e a dispersão da quota de baixa tensão (quota_bt_pct) dos concelhos entre as 5 regiões.",
   "data": "data/clean/p1_concelho_2025.csv",
   "escolha_final": {
     "geometry": "boxplot",
+    "analysis_type": "distribuicao_resumo_grupos",
     "category_column": "regiao",
     "second_category_column": "",
     "value_column": "quota_bt_pct",
     "top_n": 0,
     "log_scale": false,
-    "rationale": "Para analisar a distribuição de quota_bt_pct por regiao (com uma cardinalidade de 5 grupos e um volume de 278 linhas), o boxplot é a geometria ideal. A assimetria da variável numérica é baixa (-0.62), pelo que não é necessária uma escala logarítmica."
+    "rationale": "A pergunta pede para comparar a mediana e a dispersao de uma variavel entre grupos, o que define a analise de distribuicao_resumo_grupos. Com 5 regioes (cardinalidade baixa) e 278 linhas no total (com um minimo de 16 observacoes por regiao), o boxplot e a geometria ideal para resumir a posicao e a dispersao da quota_bt_pct."
   },
   "tentativas": 1,
   "historico": [
@@ -17,12 +18,13 @@
       "attempt": 1,
       "escolha": {
         "geometry": "boxplot",
+        "analysis_type": "distribuicao_resumo_grupos",
         "category_column": "regiao",
         "second_category_column": "",
         "value_column": "quota_bt_pct",
         "top_n": 0,
         "log_scale": false,
-        "rationale": "Para analisar a distribuição de quota_bt_pct por regiao (com uma cardinalidade de 5 grupos e um volume de 278 linhas), o boxplot é a geometria ideal. A assimetria da variável numérica é baixa (-0.62), pelo que não é necessária uma escala logarítmica."
+        "rationale": "A pergunta pede para comparar a mediana e a dispersao de uma variavel entre grupos, o que define a analise de distribuicao_resumo_grupos. Com 5 regioes (cardinalidade baixa) e 278 linhas no total (com um minimo de 16 observacoes por regiao), o boxplot e a geometria ideal para resumir a posicao e a dispersao da quota_bt_pct."
       }
     },
     {

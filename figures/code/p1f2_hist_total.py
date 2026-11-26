@@ -6,96 +6,60 @@ DATA_PATH = 'data/clean/p1_concelho_2025.csv'
 OUTPUT_PATH = 'figures/p1f2_hist_total.png'
 Path(OUTPUT_PATH).parent.mkdir(parents=True, exist_ok=True)
 
-import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Ler os dados
+# Configuração de estilo inspirada em Claus Wilke
+plt.style.use('seaborn-v0_8-whitegrid')
+plt.rcParams['font.family'] = 'DejaVu Sans'
+plt.rcParams['font.size'] = 11
+
+# Ler dados
 df = pd.read_csv(DATA_PATH)
 
-# Selecionar os 40 concelhos com maior consumo anual total e ordenar (maior no topo)
-df_top40 = df.nlargest(40, "total_gwh").sort_values("total_gwh", ascending=True)
+# Preparar dados: log10 do consumo total (total_gwh)
+log_data = np.log10(df['total_gwh'])
+mediana_orig = df['total_gwh'].median()
+mediana_log = np.log10(mediana_orig)
 
-# Mapeamento de cores por região (especificação exata)
-cores_regiao = {
-    "Norte": "#0072B2",
-    "Centro": "#E69F00",
-    "Lisboa e Vale do Tejo": "#D55E00",
-    "Alentejo": "#009E73",
-    "Algarve": "#CC79A7",
-}
+# Criar figura
+fig, ax = plt.subplots(figsize=(10, 6))
 
-# Criar a figura
-fig, ax = plt.subplots(figsize=(10, 10))
-
-# Extrair dados para o plot
-y_pos = range(len(df_top40))
-concelhos = df_top40["concelho"]
-valores = df_top40["total_gwh"]
-regioes = df_top40["regiao"]
-cores = regioes.map(cores_regiao)
-
-# Dot plot de Cleveland (linhas horizontais finas e pontos)
-ax.hlines(
-    y=y_pos,
-    xmin=valores.min() * 0.8,
-    xmax=valores,
-    color="#cccccc",
-    linestyle="-",
-    linewidth=1,
-    zorder=1,
-)
-scatter = ax.scatter(
-    valores, y_pos, color=cores, s=50, zorder=2, edgecolors="none"
+# Histograma de densidade com KDE (regra da geometria)
+sns.histplot(
+    log_data,
+    stat='density',
+    kde=True,
+    bins=30,
+    color='#0072B2',
+    edgecolor='white',
+    alpha=0.7,
+    ax=ax,
+    line_kws={'linewidth': 2, 'color': '#D55E00'}
 )
 
-# Configurar escala logarítmica no eixo x
-ax.set_xscale("log")
-
-# Rótulos e título em português europeu
-ax.set_yticks(y_pos)
-ax.set_yticklabels(concelhos, fontsize=9)
-ax.set_xlabel("Consumo anual total (GWh, escala logarítmica)", fontsize=11)
-ax.set_title(
-    "Os 40 concelhos com maior consumo de eletricidade (2025)",
-    fontsize=13,
-    pad=15,
-    fontweight="bold",
+# Linha vertical tracejada na mediana
+ax.axvline(
+    mediana_log,
+    color='#000000',
+    linestyle='--',
+    linewidth=1.5,
+    label=f'Mediana: {mediana_orig:.1f} GWh (log10: {mediana_log:.2f})'
 )
 
-# Grelha suave vertical
-ax.grid(
-    axis="x", which="both", linestyle="--", linewidth=0.5, color="#e0e0e0", zorder=0
-)
-ax.spines["top"].set_visible(False)
-ax.spines["right"].set_visible(False)
-ax.spines["left"].set_color("#cccccc")
-ax.spines["bottom"].set_color("#cccccc")
+# Rótulos e título
+ax.set_title('Distribuição do consumo anual total por concelho', fontsize=14, pad=15, weight='bold', loc='left')
+ax.set_xlabel('log10 do consumo (GWh)', fontsize=12, labelpad=10)
+ax.set_ylabel('Densidade', fontsize=12, labelpad=10)
 
-# Legenda para as regiões
-handles = [
-    plt.Line2D(
-        [0],
-        [0],
-        marker="o",
-        color="w",
-        markerfacecolor=cor,
-        markersize=8,
-        label=regiao,
-    )
-    for regiao, cor in cores_regiao.items()
-]
-ax.legend(
-    handles=handles,
-    title="Região",
-    loc="lower right",
-    frameon=True,
-    facecolor="white",
-    edgecolor="none",
-)
+# Legenda totalmente FORA da área dos dados para evitar sobreposição
+ax.legend(frameon=True, facecolor='white', edgecolor='none', loc='upper left', bbox_to_anchor=(1.02, 1))
 
-# Ajustes finais de layout
-plt.tight_layout()
+# Limpeza visual (remover espinhais desnecessários)
+sns.despine(top=True, right=True)
 
-# Guardar e fechar
-plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
+# Gravar figura (bbox_inches='tight' garante que a legenda exterior não é cortada)
+plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches='tight')
 plt.close()

@@ -7,86 +7,115 @@ OUTPUT_PATH = 'figures/p1f2_dist_distrito.png'
 Path(OUTPUT_PATH).parent.mkdir(parents=True, exist_ok=True)
 
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-import numpy as np
-from matplotlib.patches import Patch
+import seaborn as sns
 
 # Configuração de estilo inspirada em Claus Wilke
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.size'] = 11
+plt.style.use("seaborn-v0_8-whitegrid")
+plt.rcParams["font.sans-serif"] = "DejaVu Sans"
+plt.rcParams["font.family"] = "sans-serif"
 
-# Ler dados
+# Carregar dados
 df = pd.read_csv(DATA_PATH)
 
-# Calcular a mediana da quota_bt_pct por distrito para ordenar os grupos
+# Calcular a mediana da quota_bt_pct por distrito para ordenação
 ordem_distritos = (
-    df.groupby('distrito')['quota_bt_pct']
+    df.groupby("distrito")["quota_bt_pct"]
     .median()
-    .sort_values(ascending=True)  # Ordem ascendente para o eixo horizontal (mais baixo em baixo)
+    .sort_values(ascending=True)
     .index
 )
 
-# Paleta de cores baseada na região
-palette_regiao = {
-    'Norte': '#0072B2',
-    'Centro': '#E69F00',
-    'Lisboa e Vale do Tejo': '#D55E00',
-    'Alentejo': '#009E73',
-    'Algarve': '#CC79A7'
-}
-
-# Mapear a cor predominante de cada distrito com base na sua região mais frequente
-map_distrito_regiao = df.groupby('distrito')['regiao'].agg(lambda x: x.mode()[0]).to_dict()
-palette_distritos = {dist: palette_regiao[map_distrito_regiao[dist]] for dist in ordem_distritos}
-
-# Criar a figura (como há mais de 8 grupos, usamos orientação horizontal)
+# Criar a figura
 fig, ax = plt.subplots(figsize=(10, 8))
 
-# Boxplot horizontal
+# Dicionário de cores para as regiões conforme especificado
+cores_regioes = {
+    "Norte": "#0072B2",
+    "Centro": "#E69F00",
+    "Lisboa e Vale do Tejo": "#D55E00",
+    "Alentejo": "#009E73",
+    "Algarve": "#CC79A7",
+}
+
+# Mapear a região dominante para cada distrito ordenado para colorir os boxplots e pontos
+# Usamos a primeira ocorrência da região para cada distrito (assumindo que cada distrito pertence a uma única região)
+mapa_distrito_regiao = (
+    df.drop_duplicates(subset=["distrito"])
+    .set_index("distrito")["regiao"]
+    .to_dict()
+)
+paleta_distritos = [
+    cores_regioes[mapa_distrito_regiao[d]] for d in ordem_distritos
+]
+
+# Como são mais de 8 grupos (18 distritos), usar orientação horizontal
+# Boxplot
 sns.boxplot(
     data=df,
-    y='distrito',
-    x='quota_bt_pct',
+    x="quota_bt_pct",
+    y="distrito",
     order=ordem_distritos,
-    palette=palette_distritos,
     ax=ax,
-    fliersize=0,  # Ocultar outliers do boxplot para não duplicar com o stripplot
+    palette=paleta_distritos,
     boxprops=dict(alpha=0.7),
-    linewidth=1.2
+    fliersize=0,  # Ocultar outliers do boxplot para não duplicar com o stripplot
+    linewidth=1.2,
 )
 
-# Pontos individuais sobrepostos (stripplot)
+# Stripplot sobreposto (pontos individuais)
 sns.stripplot(
     data=df,
-    y='distrito',
-    x='quota_bt_pct',
+    x="quota_bt_pct",
+    y="distrito",
     order=ordem_distritos,
-    color='black',
+    ax=ax,
+    color="black",
     alpha=0.4,
+    size=4,
     jitter=0.2,
-    size=5,
-    ax=ax
 )
 
-# Remover molduras desnecessárias (despine)
-sns.despine(ax=ax, top=True, right=True, left=False, bottom=False)
+# Legenda para as regiões (fora da área dos dados)
+handles = [
+    plt.Line2D(
+        [0],
+        [0],
+        marker="o",
+        color="w",
+        markerfacecolor=cor,
+        markersize=8,
+        label=regiao,
+    )
+    for regiao, cor in cores_regioes.items()
+]
+ax.legend(
+    handles=handles,
+    title="Região",
+    loc="upper left",
+    bbox_to_anchor=(1.02, 1),
+    frameon=False,
+)
 
-# Rótulos e títulos limpos e informativos
-ax.set_title('Distribuição da quota de consumo em baixa tensão por distrito', fontsize=14, pad=15, loc='left', fontweight='bold')
-ax.set_xlabel('Quota de Baixa Tensão [% (GWh)]', fontsize=11, labelpad=10)
-ax.set_ylabel('Distrito', fontsize=11, labelpad=10)
+# Títulos e rótulos (em português europeu, unidade '%' estritamente)
+ax.set_title(
+    "Distribuição da quota de consumo em baixa tensão por distrito",
+    fontsize=14,
+    pad=15,
+    weight="bold",
+    loc="left",
+)
+ax.set_xlabel("Quota de baixa tensão (%)", fontsize=11, labelpad=10)
+ax.set_ylabel("Distrito", fontsize=11, labelpad=10)
 
-# Ajustar limites e grelha
-ax.set_xlim(0, 101)
-ax.xaxis.grid(True, linestyle='--', alpha=0.5)
-ax.yaxis.grid(False)
+# Ajustes finais de estética
+ax.tick_params(axis="both", which="major", labelsize=10)
+ax.grid(axis="y", linestyle="--", alpha=0.3)
+ax.grid(axis="x", linestyle="--", alpha=0.7)
 
-# Legenda manual para as regiões
-legend_elements = [Patch(facecolor=color, label=regiao) for regiao, color in palette_regiao.items()]
-ax.legend(handles=legend_elements, title='Região', loc='lower right', frameon=True, facecolor='white', framealpha=0.9)
+# Garantir que tudo cabe perfeitamente
+plt.tight_layout()
 
-# Guardar figura
-plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches='tight')
+# Gravar figura
+plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
 plt.close()

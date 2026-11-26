@@ -1,32 +1,53 @@
 {
   "name": "p1f2_dist_distrito",
-  "pergunta": "Como se distribui a quota de baixa tensão (quota_bt_pct) dos concelhos em cada um dos 18 distritos?",
+  "pergunta": "Compara a mediana e a dispersão da quota de baixa tensão (quota_bt_pct) dos concelhos entre os 18 distritos.",
   "data": "data/clean/p1_concelho_2025.csv",
   "escolha_final": {
     "geometry": "boxplot",
+    "analysis_type": "distribuicao_resumo_grupos",
     "category_column": "distrito",
     "second_category_column": "",
     "value_column": "quota_bt_pct",
     "top_n": 0,
     "log_scale": false,
-    "rationale": "Para visualizar a distribuição de uma variável numérica por grupos com 18 distritos (cardinalidade de 18) e um volume total de 278 linhas, o boxplot é a geometria ideal. A assimetria da quota_bt_pct é baixa (-0.62), dispensando o uso de escala logarítmica."
+    "rationale": "Como a pergunta pede para comparar a mediana e a dispersão entre grupos, o tipo de análise é distribuicao_resumo_grupos. Com 18 distritos e um mínimo de 10 observações por grupo, o ridgeline já não é adequado devido ao requisito mínimo de 15 observações por grupo, pelo que o boxplot é a escolha ideal para lidar com esta cardinalidade e volume de dados sem restrições severas de amostra."
   },
-  "tentativas": 1,
+  "tentativas": 2,
   "historico": [
     {
       "attempt": 1,
       "escolha": {
-        "geometry": "boxplot",
+        "geometry": "ridgeline",
+        "analysis_type": "distribuicao_resumo_grupos",
         "category_column": "distrito",
         "second_category_column": "",
         "value_column": "quota_bt_pct",
         "top_n": 0,
         "log_scale": false,
-        "rationale": "Para visualizar a distribuição de uma variável numérica por grupos com 18 distritos (cardinalidade de 18) e um volume total de 278 linhas, o boxplot é a geometria ideal. A assimetria da quota_bt_pct é baixa (-0.62), dispensando o uso de escala logarítmica."
+        "rationale": "A pergunta pede para comparar a mediana e a dispersão entre grupos, classificando-se como distribuicao_resumo_grupos. Com 18 distritos (cardinalidade dentro do limite de 20) e um total de 278 linhas (com uma mediana de 14.5 observações por distrito), o gráfico ridgeline é o ideal para visualizar a distribuição da quota_bt_pct por distrito sem sobreposição excessiva, tendo a variável numérica uma assimetria moderada que dispensa escala logarítmica."
       }
     },
     {
       "attempt": 1,
+      "erros": [
+        "'ridgeline' exige >= 15 observações por grupo, mas há grupos com 10. Escolhe boxplot ou menos grupos."
+      ]
+    },
+    {
+      "attempt": 2,
+      "escolha": {
+        "geometry": "boxplot",
+        "analysis_type": "distribuicao_resumo_grupos",
+        "category_column": "distrito",
+        "second_category_column": "",
+        "value_column": "quota_bt_pct",
+        "top_n": 0,
+        "log_scale": false,
+        "rationale": "Como a pergunta pede para comparar a mediana e a dispersão entre grupos, o tipo de análise é distribuicao_resumo_grupos. Com 18 distritos e um mínimo de 10 observações por grupo, o ridgeline já não é adequado devido ao requisito mínimo de 15 observações por grupo, pelo que o boxplot é a escolha ideal para lidar com esta cardinalidade e volume de dados sem restrições severas de amostra."
+      }
+    },
+    {
+      "attempt": 2,
       "erros": []
     }
   ],

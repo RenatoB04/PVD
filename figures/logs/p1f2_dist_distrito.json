@@ -1,13 +1,13 @@
 {
   "name": "p1f2_dist_distrito",
-  "spec": "Pergunta analítica: Como se distribui a quota de baixa tensão (quota_bt_pct) dos concelhos em cada um dos 18 distritos?\nGeometria OBRIGATÓRIA: boxplot (escolhida por análise de cardinalidade e volume).\nColunas: categoria = distrito; 2.ª categoria = -; valor = quota_bt_pct.\nInstruções da geometria: Boxplot por grupo (sns.boxplot) com os pontos individuais sobrepostos (sns.stripplot, semitransparentes, com jitter); grupos ordenados pela mediana; orientação horizontal se houver mais de 8 grupos. Se log_scale=true, eixo log.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo; rótulos dos eixos com unidades (GWh).",
+  "spec": "Pergunta analítica: Compara a mediana e a dispersão da quota de baixa tensão (quota_bt_pct) dos concelhos entre os 18 distritos.\nGeometria OBRIGATÓRIA: boxplot (escolhida por análise de cardinalidade e volume).\nColunas: categoria = distrito; 2.ª categoria = -; valor = quota_bt_pct.\nInstruções da geometria: Boxplot por grupo (sns.boxplot) com os pontos individuais sobrepostos (sns.stripplot, semitransparentes, com jitter); grupos ordenados pela mediana; orientação horizontal se houver mais de 8 grupos. Se log_scale=true, eixo log.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo. O rótulo do eixo do valor (quota_bt_pct) usa a unidade '%' e nenhuma outra. Qualquer legenda fica FORA da área dos dados (bbox_to_anchor ou sns.move_legend) e nunca tapa pontos, barras ou células.",
   "status": "approved",
-  "iteracoes": 3,
+  "iteracoes": 1,
   "eventos": [
     {
       "node": "generator",
       "iteration": 1,
-      "linhas": 84
+      "linhas": 113
     },
     {
       "node": "validator",
@@ -22,54 +22,6 @@
     {
       "node": "critic",
       "iteration": 1,
-      "approved": false,
-      "severe": [
-        "O rótulo do eixo x indica unidades contraditórias '(GWh) [%]'. Deve indicar apenas a unidade correta (%)."
-      ],
-      "minor": []
-    },
-    {
-      "node": "generator",
-      "iteration": 2,
-      "linhas": 84
-    },
-    {
-      "node": "validator",
-      "iteration": 2,
-      "issues": []
-    },
-    {
-      "node": "executor",
-      "iteration": 2,
-      "issues": []
-    },
-    {
-      "node": "critic",
-      "iteration": 2,
-      "approved": false,
-      "severe": [
-        "A especificação exige que os rótulos dos eixos incluam unidades (GWh), mas o eixo x apresenta apenas a percentagem [%]."
-      ],
-      "minor": []
-    },
-    {
-      "node": "generator",
-      "iteration": 3,
-      "linhas": 84
-    },
-    {
-      "node": "validator",
-      "iteration": 3,
-      "issues": []
-    },
-    {
-      "node": "executor",
-      "iteration": 3,
-      "issues": []
-    },
-    {
-      "node": "critic",
-      "iteration": 3,
       "approved": true,
       "severe": [],
       "minor": []

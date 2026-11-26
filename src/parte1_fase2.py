@@ -34,13 +34,18 @@ PEDIDOS = [
      "desc": DESC_CONCELHO_MES,
      "question": "Como varia ao longo dos meses de 2025 o consumo dos concelhos?"},
     {"name": "p1f2_hist_total", "data": "data/clean/p1_concelho_2025.csv", "desc": DESC_CONC,
-     "question": "Como se distribui o consumo anual total (total_gwh) entre os 278 concelhos?"},
+     "question": "Qual é a forma da distribuição do consumo anual total (total_gwh) dos 278 "
+                 "concelhos (assimetria, caudas, moda), sem comparar concelhos individuais?"},
     {"name": "p1f2_dist_regiao", "data": "data/clean/p1_concelho_2025.csv", "desc": DESC_CONC,
-     "question": "Como se distribui a quota de baixa tensão (quota_bt_pct) dos concelhos "
-                 "em cada uma das 5 regiões?"},
+     "question": "Compara a mediana e a dispersão da quota de baixa tensão (quota_bt_pct) "
+                 "dos concelhos entre as 5 regiões."},
+    {"name": "p1f2_forma_regiao", "data": "data/clean/p1_concelho_2025.csv", "desc": DESC_CONC,
+     "question": "Compara a forma completa da distribuição (densidade, assimetria, "
+                 "multimodalidade) da quota de baixa tensão (quota_bt_pct) dos concelhos "
+                 "entre as 5 regiões."},
     {"name": "p1f2_dist_distrito", "data": "data/clean/p1_concelho_2025.csv", "desc": DESC_CONC,
-     "question": "Como se distribui a quota de baixa tensão (quota_bt_pct) dos concelhos "
-                 "em cada um dos 18 distritos?"},
+     "question": "Compara a mediana e a dispersão da quota de baixa tensão (quota_bt_pct) "
+                 "dos concelhos entre os 18 distritos."},
     {"name": "p1f2_treemap", "data": "data/clean/f2_distrito.csv", "desc": DESC_DISTRITO,
      "question": "Como se reparte o consumo total de 2025 por região e, dentro de cada "
                  "região, por distrito?"},

@@ -35,9 +35,25 @@ MAX_ATTEMPTS = 3
 Geometry = Literal["bar", "dot_plot", "heatmap", "histogram_density",
                    "boxplot", "violin", "ridgeline", "treemap"]
 
+AnalysisType = Literal["comparar_categorias", "duas_dimensoes", "distribuicao_univariada",
+                       "distribuicao_resumo_grupos", "distribuicao_forma_grupos",
+                       "proporcoes_aninhadas"]
+
+# Que geometrias respondem a que tipo de pergunta (heurística inspirada em Wilke, caps. 6-11)
+ALLOWED_GEOMS = {
+    "comparar_categorias": {"bar", "dot_plot"},
+    "duas_dimensoes": {"heatmap"},
+    "distribuicao_univariada": {"histogram_density"},
+    "distribuicao_resumo_grupos": {"boxplot", "violin", "ridgeline"},
+    "distribuicao_forma_grupos": {"violin", "ridgeline"},
+    "proporcoes_aninhadas": {"treemap"},
+}
+
 
 class ChartChoice(BaseModel):
     geometry: Geometry
+    analysis_type: AnalysisType = Field(
+        description="Tipo de análise que a PERGUNTA pede (decidido pela pergunta, não pela geometria).")
     category_column: str = Field(description="Coluna categórica principal (grupos/linhas). "
                                  "String vazia se não aplicável.")
     second_category_column: str = Field(description="2.ª coluna categórica (colunas do heatmap, "
@@ -52,20 +68,32 @@ class ChartChoice(BaseModel):
 
 SYSTEM = """És um especialista em visualização de dados (Wilke, Fundamentals of Data \
 Visualization, caps. 6 a 11). Recebes uma pergunta analítica e o perfil de um dataset \
-(volume, cardinalidade, assimetria). Escolhes a geometria mais adequada e as colunas. \
-Diretrizes:
-- Quantidades por categoria: até 12 categorias -> bar; 13 a 40 -> dot_plot ordenado; \
-mais de 40 -> dot_plot com top_n <= 40, ou heatmap se existir uma 2.ª dimensão categórica.
-- Duas dimensões categóricas + um valor numérico -> heatmap (top_n <= 60 linhas).
-- Distribuição de uma variável numérica -> histogram_density.
-- Distribuição por grupos -> boxplot (muitos grupos ou poucos dados por grupo), violin \
-(até 12 grupos com >= 15 observações em cada) ou ridgeline (até 20 grupos com >= 15).
-- Proporções aninhadas (categoria -> subcategoria, valores positivos) -> treemap, com \
-category_column = nível superior e second_category_column = nível inferior.
-- Se o value_column tiver |assimetria| > 2 em distribuições ou heatmaps -> log_scale=true. \
-Barras nunca em escala logarítmica.
-- category_column e second_category_column são strings vazias quando não se aplicam.
-Explica a escolha em 'rationale' referindo a cardinalidade e o volume observados."""
+(volume, cardinalidade, assimetria). Primeiro classificas a pergunta em analysis_type, \
+com base no que ela pede e NÃO na geometria que preferes:
+- comparar_categorias: comparar um valor entre entidades individuais (rankings, totais \
+por região, distrito ou concelho).
+- duas_dimensoes: um valor numérico cruzado com duas dimensões categóricas.
+- distribuicao_univariada: a forma da distribuição de UMA variável numérica \
+(assimetria, caudas, moda), sem comparar entidades individuais.
+- distribuicao_resumo_grupos: comparar a mediana e a dispersão de uma variável entre grupos.
+- distribuicao_forma_grupos: comparar a forma completa da densidade (assimetria, \
+multimodalidade) entre grupos.
+- proporcoes_aninhadas: partes de um todo em dois níveis hierárquicos.
+Depois escolhes a geometria (cada analysis_type admite só algumas):
+- comparar_categorias: até 12 categorias -> bar; 13 a 40 -> dot_plot ordenado; mais de \
+40 -> dot_plot com top_n <= 40.
+- duas_dimensoes: heatmap (top_n <= 60 linhas, até 24 colunas).
+- distribuicao_univariada: histogram_density (category_column e second_category_column vazios).
+- distribuicao_resumo_grupos: boxplot (muitos grupos ou poucos dados por grupo), violin \
+(até 12 grupos com >= 15 observações) ou ridgeline (até 20 grupos com >= 15).
+- distribuicao_forma_grupos: violin (até 12 grupos) ou ridgeline (até 20 grupos), ambos \
+com >= 15 observações por grupo.
+- proporcoes_aninhadas: treemap, com category_column = nível superior e \
+second_category_column = nível inferior; valores positivos.
+Outras regras: se o value_column tiver |assimetria| > 2 em distribuições ou heatmaps, \
+log_scale=true; barras nunca em escala logarítmica. category_column e \
+second_category_column são strings vazias quando não se aplicam. Explica a escolha em \
+'rationale', referindo a cardinalidade e o volume observados."""
 
 
 # --------------------------------------------------------------------------
@@ -99,6 +127,11 @@ def profile_dataset(csv_path: str) -> dict:
 def check_choice(c: ChartChoice, profile: dict) -> list[str]:
     cols, n_rows, g = profile["colunas"], profile["n_linhas"], c.geometry
     errs: list[str] = []
+
+    if g not in ALLOWED_GEOMS[c.analysis_type]:
+        return [f"A geometria '{g}' não responde a uma análise do tipo '{c.analysis_type}'. "
+                f"Geometrias admissíveis: {sorted(ALLOWED_GEOMS[c.analysis_type])}. "
+                "O tipo de análise é ditado pela pergunta, não pela geometria."]
 
     for fname in ("category_column", "second_category_column", "value_column"):
         v = getattr(c, fname)
@@ -169,6 +202,7 @@ class SelState(TypedDict, total=False):
     errors: list[str]
     attempt: int
     history: Annotated[list[dict], operator.add]
+    seed: dict
 
 
 def profile_node(state: SelState) -> dict:
@@ -179,6 +213,11 @@ def profile_node(state: SelState) -> dict:
 
 def propose_node(state: SelState) -> dict:
     attempt = state["attempt"] + 1
+    if attempt == 1 and state.get("seed"):   # só para demonstração do ciclo
+        d = state["seed"]
+        print(f"[seletor] tentativa 1: proposta INJETADA ({d['geometry']}) para demonstrar o ciclo")
+        return {"choice": d, "attempt": attempt, "errors": [],
+                "history": [{"attempt": attempt, "escolha": d, "injetada": True}]}
     human = (f"Pergunta analítica: {state['question']}\n\nPerfil do dataset (JSON):\n"
              f"{json.dumps(state['profile'], ensure_ascii=False)}")
     messages = [SystemMessage(SYSTEM), HumanMessage(human)]
@@ -230,9 +269,9 @@ def build_selector_graph():
     return g.compile()
 
 
-def select_chart(question: str, data_path: str) -> SelState:
+def select_chart(question: str, data_path: str, seed: dict | None = None) -> SelState:
     return build_selector_graph().invoke(
-        {"question": question, "data_path": data_path, "history": []},
+        {"question": question, "data_path": data_path, "history": [], "seed": seed or {}},
         config={"recursion_limit": 30})
 
 
@@ -270,9 +309,12 @@ GUIDE = {
                 "por valor decrescente e faz rects_dist = squarify.squarify(squarify."
                 "normalize_sizes(valores, r['dx'], r['dy']), r['x'], r['y'], r['dx'], r['dy']); "
                 "desenha com matplotlib.patches.Rectangle: cada distrito com a cor da sua região "
-                "e contorno branco fino; contorno branco grosso à volta de cada região; etiqueta "
-                "dentro de cada retângulo (distrito e GWh) quando houver espaço; legenda das "
-                "regiões; eixos desligados."),
+                "e contorno branco fino; contorno branco grosso à volta de cada região. "
+                "TODOS os distritos têm de ficar identificados: se dx*dy >= 200 escreve dentro do "
+                "retângulo o nome e o valor em GWh; se dx*dy < 200 escreve só um número (1, 2, 3...) "
+                "centrado, com fontsize 7, e acrescenta fora do treemap (à direita, abaixo da "
+                "legenda) uma caixa de texto com a chave 'n = distrito (valor GWh)'. Legenda das "
+                "regiões fora da área do treemap; eixos desligados."),
 }
 
 GEOM_PATTERNS = {   # (obrigatório, proibido)
@@ -302,6 +344,23 @@ def make_geometry_validator(geometry: str):
 
     return validate_geometry
 
+def unit_of(column: str) -> str:
+    if column.endswith("_gwh"):
+        return "GWh"
+    if column.endswith("_pct"):
+        return "%"
+    return ""
+
+
+def legend_outside(code: str) -> list[str]:
+    """Rejeita legendas que possam ficar sobre os dados."""
+    uses_legend = re.search(r"\.legend\(", code) or re.search(r"hue\s*=", code)
+    placed_outside = re.search(r"bbox_to_anchor|move_legend|legend\s*=\s*False", code)
+    if uses_legend and not placed_outside:
+        return ["A legenda pode tapar dados. Coloca-a fora da área do gráfico "
+                "(bbox_to_anchor=(1.02, 1) com loc='upper left', ou sns.move_legend) "
+                "e usa bbox_inches='tight' no savefig."]
+    return []
 
 def build_spec(choice: dict, question: str) -> str:
     parts = [
@@ -316,8 +375,11 @@ def build_spec(choice: dict, question: str) -> str:
     if choice["log_scale"]:
         parts.append("Usar escala logarítmica (ver instruções da geometria) e indicá-la no rótulo do eixo.")
     parts.append("Instruções da geometria: " + GUIDE[choice["geometry"]])
-    parts.append(f"Se a cor codificar regiões, usar exatamente: {OKABE}. "
-                 "Título curto e informativo; rótulos dos eixos com unidades (GWh).")
+    unit = unit_of(choice["value_column"])
+    parts.append(f"Se a cor codificar regiões, usar exatamente: {OKABE}. Título curto e informativo. "
+                 f"O rótulo do eixo do valor ({choice['value_column']}) usa a unidade '{unit}' "
+                 "e nenhuma outra. Qualquer legenda fica FORA da área dos dados "
+                 "(bbox_to_anchor ou sns.move_legend) e nunca tapa pontos, barras ou células.")
     return "\n".join(parts)
 
 
@@ -338,7 +400,8 @@ def run_selected(name: str, data_path: str, data_description: str, question: str
          "historico": sel["history"], "perfil": sel["profile"]},
         ensure_ascii=False, indent=2), encoding="utf-8")
 
-    validators = [make_geometry_validator(choice["geometry"]), make_color_auditor(spec, name)]
+    validators = [make_geometry_validator(choice["geometry"]), legend_outside,
+                  make_color_auditor(spec, name)]
     final = run_chart(name, spec, data_path=data_path, data_description=data_description,
                       validators=validators, max_iter=max_iter)
     return choice, final

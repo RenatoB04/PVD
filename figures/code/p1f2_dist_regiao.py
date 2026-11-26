@@ -6,14 +6,15 @@ DATA_PATH = 'data/clean/p1_concelho_2025.csv'
 OUTPUT_PATH = 'figures/p1f2_dist_regiao.png'
 Path(OUTPUT_PATH).parent.mkdir(parents=True, exist_ok=True)
 
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
+import numpy as np
 
-# Ler os dados
+# Carregar os dados
 df = pd.read_csv(DATA_PATH)
 
-# Definir a paleta de cores exata solicitada
+# Definir a paleta de cores estipulada
 palette = {
     "Norte": "#0072B2",
     "Centro": "#E69F00",
@@ -22,57 +23,52 @@ palette = {
     "Algarve": "#CC79A7"
 }
 
-# Calcular a mediana por região para ordenar os grupos (ordem decrescente)
-median_order = (
-    df.groupby("regiao")["quota_bt_pct"]
-    .median()
-    .sort_values(ascending=False)
-    .index
-)
+# Calcular a ordem das regiões com base na mediana da quota_bt_pct
+order = df.groupby("regiao")["quota_bt_pct"].median().sort_values(ascending=False).index
 
-# Configurar a figura
+# Configuração da figura (Wilke: proporção adequada, limpa)
 fig, ax = plt.subplots(figsize=(10, 6))
-
-# Estilo visual limpo (Wilke style)
-sns.set_theme(style="white")
 
 # Boxplot com os grupos ordenados pela mediana
 sns.boxplot(
     data=df,
     x="quota_bt_pct",
     y="regiao",
-    order=median_order,
+    order=order,
     palette=palette,
     ax=ax,
-    boxprops=dict(alpha=0.6),
-    linewidth=1.2,
-    fliersize=0  # Remover os outliers predefinidos para evitar duplicação com o stripplot
+    boxprops=dict(alpha=0.7),
+    showfliers=False,  # Evitar duplicação de outliers com o stripplot
+    width=0.5
 )
 
-# Sobrepor os pontos individuais (stripplot) com jitter e semitransparência
+# Pontos individuais sobrepostos com jitter para mostrar a distribuição completa
 sns.stripplot(
     data=df,
     x="quota_bt_pct",
     y="regiao",
-    order=median_order,
+    order=order,
     color="black",
-    alpha=0.5,
-    jitter=0.2,
+    alpha=0.4,
     size=5,
+    jitter=0.2,
     ax=ax
 )
 
-# Rótulos e título em português europeu com unidade solicitada (GWh)
-ax.set_title("Distribuição da quota de consumo em baixa tensão por região", fontsize=14, pad=15, loc="left", fontweight="bold")
-ax.set_xlabel("Quota de baixa tensão (GWh)", fontsize=11)
-ax.set_ylabel("Região", fontsize=11)
+# Rótulos e título claros em português europeu
+ax.set_title("Distribuição da quota de consumo em baixa tensão por região (2025)", fontsize=13, pad=15, weight='bold')
+ax.set_xlabel("Quota de baixa tensão (%)", fontsize=11)
+ax.set_ylabel("", fontsize=11)
 
-# Remover molduras desnecessárias (despine)
-sns.despine(top=True, right=True)
+# Remover decorações desnecessárias (top e right spines)
+sns.despine(top=True, right=True, left=False, bottom=False)
 
-# Ajustar limites do eixo x (0 a 100%)
-ax.set_xlim(0, 100)
+# Garantir limites adequados para o eixo X
+ax.set_xlim(0, 105)
 
-# Guardar a figura
+# Ajustar layout para evitar cortes
+plt.tight_layout()
+
+# Guardar figura e fechar
 plt.savefig(OUTPUT_PATH, dpi=150, bbox_inches="tight")
 plt.close()

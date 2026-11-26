@@ -73,7 +73,8 @@ se o eixo y for invertido: lê o código antes de apontar um erro de ordenação
 - Se receberes problemas da revisão anterior, verifica se foram resolvidos. Não \
 repitas críticas já resolvidas e não inventes críticas novas sem evidência clara.
 - Marca severe=true apenas para: requisito explícito da especificação não cumprido, \
-texto sobreposto ou cortado que impede a leitura, dados mal representados.
+texto sobreposto ou cortado que impede a leitura, legenda a tapar pontos ou barras, \
+dados mal representados, rótulo de eixo com unidade errada.
 - No máximo 4 problemas, em português europeu, concretos e acionáveis."""
 
 

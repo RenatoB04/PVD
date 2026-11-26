@@ -1,0 +1,126 @@
+{
+  "name": "p1f2_forma_regiao",
+  "pergunta": "Compara a forma completa da distribuição (densidade, assimetria, multimodalidade) da quota de baixa tensão (quota_bt_pct) dos concelhos entre as 5 regiões.",
+  "data": "data/clean/p1_concelho_2025.csv",
+  "escolha_final": {
+    "geometry": "violin",
+    "analysis_type": "distribuicao_forma_grupos",
+    "category_column": "regiao",
+    "second_category_column": "",
+    "value_column": "quota_bt_pct",
+    "top_n": 0,
+    "log_scale": false,
+    "rationale": "A pergunta pede para comparar a forma completa da distribuição entre grupos. Com 5 regiões (menos de 12 categorias) e um volume de 278 linhas (garantindo um mínimo de 16 observações por região), o gráfico de violino é a geometria ideal para visualizar densidades, assimetrias e multimodalidades."
+  },
+  "tentativas": 1,
+  "historico": [
+    {
+      "attempt": 1,
+      "escolha": {
+        "geometry": "violin",
+        "analysis_type": "distribuicao_forma_grupos",
+        "category_column": "regiao",
+        "second_category_column": "",
+        "value_column": "quota_bt_pct",
+        "top_n": 0,
+        "log_scale": false,
+        "rationale": "A pergunta pede para comparar a forma completa da distribuição entre grupos. Com 5 regiões (menos de 12 categorias) e um volume de 278 linhas (garantindo um mínimo de 16 observações por região), o gráfico de violino é a geometria ideal para visualizar densidades, assimetrias e multimodalidades."
+      }
+    },
+    {
+      "attempt": 1,
+      "erros": []
+    }
+  ],
+  "perfil": {
+    "n_linhas": 278,
+    "colunas": {
+      "concelho": {
+        "tipo": "categorica",
+        "n_distintos": 278,
+        "n_nulos": 0,
+        "exemplos": [
+          "Lisboa",
+          "Maia",
+          "Porto",
+          "Figueira da Foz"
+        ],
+        "obs_por_categoria_min": 1,
+        "obs_por_categoria_mediana": 1.0
+      },
+      "distrito": {
+        "tipo": "categorica",
+        "n_distintos": 18,
+        "n_nulos": 0,
+        "exemplos": [
+          "Lisboa",
+          "Porto",
+          "Coimbra",
+          "Setúbal"
+        ],
+        "obs_por_categoria_min": 10,
+        "obs_por_categoria_mediana": 14.5
+      },
+      "regiao": {
+        "tipo": "categorica",
+        "n_distintos": 5,
+        "n_nulos": 0,
+        "exemplos": [
+          "Lisboa e Vale do Tejo",
+          "Norte",
+          "Centro",
+          "Algarve"
+        ],
+        "obs_por_categoria_min": 16,
+        "obs_por_categoria_mediana": 50.0
+      },
+      "bt_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 278,
+        "n_nulos": 0,
+        "minimo": 3.185,
+        "mediana": 34.624,
+        "maximo": 1779.812,
+        "assimetria": 6.14
+      },
+      "mt_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 277,
+        "n_nulos": 0,
+        "minimo": 0.0,
+        "mediana": 24.31,
+        "maximo": 1436.702,
+        "assimetria": 4.1
+      },
+      "total_gwh": {
+        "tipo": "numerica",
+        "n_distintos": 278,
+        "n_nulos": 0,
+        "minimo": 5.121,
+        "mediana": 60.628,
+        "maximo": 3216.514,
+        "assimetria": 4.95
+      },
+      "quota_bt_pct": {
+        "tipo": "numerica",
+        "n_distintos": 277,
+        "n_nulos": 0,
+        "minimo": 4.286,
+        "mediana": 67.314,
+        "maximo": 100.0,
+        "assimetria": -0.62
+      },
+      "perfil": {
+        "tipo": "categorica",
+        "n_distintos": 2,
+        "n_nulos": 0,
+        "exemplos": [
+          "Predomínio BT",
+          "Predomínio MT/AT/MAT"
+        ],
+        "obs_por_categoria_min": 66,
+        "obs_por_categoria_mediana": 139.0
+      }
+    }
+  }
+}

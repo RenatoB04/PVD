@@ -1,0 +1,30 @@
+{
+  "name": "p1f2_forma_regiao",
+  "spec": "Pergunta analítica: Compara a forma completa da distribuição (densidade, assimetria, multimodalidade) da quota de baixa tensão (quota_bt_pct) dos concelhos entre as 5 regiões.\nGeometria OBRIGATÓRIA: violin (escolhida por análise de cardinalidade e volume).\nColunas: categoria = regiao; 2.ª categoria = -; valor = quota_bt_pct.\nInstruções da geometria: Violin plot (sns.violinplot com inner='quartile', cut=0, density_norm='width') por grupo ordenado pela mediana; se os grupos forem regiões, cor por região.\nSe a cor codificar regiões, usar exatamente: Norte=#0072B2, Centro=#E69F00, Lisboa e Vale do Tejo=#D55E00, Alentejo=#009E73, Algarve=#CC79A7. Título curto e informativo. O rótulo do eixo do valor (quota_bt_pct) usa a unidade '%' e nenhuma outra. Qualquer legenda fica FORA da área dos dados (bbox_to_anchor ou sns.move_legend) e nunca tapa pontos, barras ou células.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 61
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

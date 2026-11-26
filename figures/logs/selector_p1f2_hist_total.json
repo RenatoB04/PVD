@@ -1,28 +1,30 @@
 {
   "name": "p1f2_hist_total",
-  "pergunta": "Como se distribui o consumo anual total (total_gwh) entre os 278 concelhos?",
+  "pergunta": "Qual é a forma da distribuição do consumo anual total (total_gwh) dos 278 concelhos (assimetria, caudas, moda), sem comparar concelhos individuais?",
   "data": "data/clean/p1_concelho_2025.csv",
   "escolha_final": {
-    "geometry": "dot_plot",
-    "category_column": "concelho",
+    "geometry": "histogram_density",
+    "analysis_type": "distribuicao_univariada",
+    "category_column": "",
     "second_category_column": "",
     "value_column": "total_gwh",
-    "top_n": 40,
+    "top_n": 0,
     "log_scale": true,
-    "rationale": "Como a cardinalidade da categoria concelho e o volume sao elevados (278 concelhos), um dot_plot limitado aos top_n 40 e ideal para evitar a sobrelotacao visual. Dado que a assimetria da variavel total_gwh e extrema (4.95), aplica-se uma escala logaritmica para melhor legibilidade."
+    "rationale": "A pergunta pede a forma da distribuição de uma única variável numérica (total_gwh) para 278 observações, sem comparar entidades. Dado que a assimetria da variável é de 4.95 (superior a 2), aplica-se uma escala logarítmica com o histograma e densidade."
   },
   "tentativas": 1,
   "historico": [
     {
       "attempt": 1,
       "escolha": {
-        "geometry": "dot_plot",
-        "category_column": "concelho",
+        "geometry": "histogram_density",
+        "analysis_type": "distribuicao_univariada",
+        "category_column": "",
         "second_category_column": "",
         "value_column": "total_gwh",
-        "top_n": 40,
+        "top_n": 0,
         "log_scale": true,
-        "rationale": "Como a cardinalidade da categoria concelho e o volume sao elevados (278 concelhos), um dot_plot limitado aos top_n 40 e ideal para evitar a sobrelotacao visual. Dado que a assimetria da variavel total_gwh e extrema (4.95), aplica-se uma escala logaritmica para melhor legibilidade."
+        "rationale": "A pergunta pede a forma da distribuição de uma única variável numérica (total_gwh) para 278 observações, sem comparar entidades. Dado que a assimetria da variável é de 4.95 (superior a 2), aplica-se uma escala logarítmica com o histograma e densidade."
       }
     },
     {

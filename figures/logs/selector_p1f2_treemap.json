@@ -4,12 +4,13 @@
   "data": "data/clean/f2_distrito.csv",
   "escolha_final": {
     "geometry": "treemap",
+    "analysis_type": "proporcoes_aninhadas",
     "category_column": "regiao",
     "second_category_column": "distrito",
     "value_column": "total_gwh",
     "top_n": 0,
     "log_scale": false,
-    "rationale": "Para visualizar proporções aninhadas onde a categoria superior e inferior representam a repartição do consumo por região e distrito com um volume de 18 linhas, o treemap é a geometria ideal. A assimetria de 1.4 no valor numérico não requer escala logarítmica para este tipo de visualização proporcional."
+    "rationale": "A pergunta pede a repartição de um todo em dois níveis hierárquicos (região e distrito), o que corresponde a proporções aninhadas. Com um volume de 18 linhas, a geometria ideal é o treemap, onde a região define o nível superior e o distrito o nível inferior, visualizados através da métrica total_gwh."
   },
   "tentativas": 1,
   "historico": [
@@ -17,12 +18,13 @@
       "attempt": 1,
       "escolha": {
         "geometry": "treemap",
+        "analysis_type": "proporcoes_aninhadas",
         "category_column": "regiao",
         "second_category_column": "distrito",
         "value_column": "total_gwh",
         "top_n": 0,
         "log_scale": false,
-        "rationale": "Para visualizar proporções aninhadas onde a categoria superior e inferior representam a repartição do consumo por região e distrito com um volume de 18 linhas, o treemap é a geometria ideal. A assimetria de 1.4 no valor numérico não requer escala logarítmica para este tipo de visualização proporcional."
+        "rationale": "A pergunta pede a repartição de um todo em dois níveis hierárquicos (região e distrito), o que corresponde a proporções aninhadas. Com um volume de 18 linhas, a geometria ideal é o treemap, onde a região define o nível superior e o distrito o nível inferior, visualizados através da métrica total_gwh."
       }
     },
     {
