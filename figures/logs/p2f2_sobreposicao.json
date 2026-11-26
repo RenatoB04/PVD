@@ -1,0 +1,30 @@
+{
+  "name": "p2f2_sobreposicao",
+  "spec": "Figura com 3 painéis lado a lado (figsize (18, 6.2), sharex=True, sharey=True) com os mesmos dados: cada ponto é um concelho num mês (x = bt_gwh, y = mt_gwh), usando apenas linhas com bt_gwh > 0 e mt_gwh > 0; escalas logarítmicas (base 10) nos dois eixos. Painel 1 'Pontos opacos (sobreposição)': ax.scatter com s=10, alpha=1, cor #0072B2, linewidths=0. Painel 2 'Pontos transparentes': ax.scatter com s=10, alpha=0.08, cor #0072B2, linewidths=0. Painel 3 'Hexbin (contagem por célula)': ax.hexbin(x, y, gridsize=55, xscale='log', yscale='log', bins='log', mincnt=1, cmap='viridis') com barra de cor rotulada 'Nº de observações (escala log)', fora dos gráficos. Rótulos dos eixos 'Consumo BT (GWh)' e 'Consumo MT/AT/MAT (GWh)' (y só no 1.º painel). Calcular no código o nº de observações usadas e o nº excluídas por terem BT ou MT igual a zero, e escrevê-los no título geral (fig.suptitle) em 2 linhas: 'Tratamento de sobreposição de pontos (Wilke, cap. 18)' e 'n = X observações concelho-mês usadas; Y excluídas (consumo nulo)'.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 78
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}

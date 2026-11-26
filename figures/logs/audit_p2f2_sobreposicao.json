@@ -1,0 +1,18 @@
+[
+  {
+    "paletas_detetadas": {
+      "viridis": "sequential"
+    },
+    "n_hex": 1,
+    "mappings": [
+      {
+        "variable": "Nº de observações",
+        "nature": "continua_sequencial",
+        "palette": "viridis",
+        "adequate": true,
+        "problem": ""
+      }
+    ],
+    "issues": []
+  }
+]

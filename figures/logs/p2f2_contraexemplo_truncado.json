@@ -1,0 +1,23 @@
+{
+  "name": "p2f2_contraexemplo_truncado",
+  "spec": "Figura com 2 painéis lado a lado (figsize (13, 6.5)) com as MESMAS barras verticais (ax.bar) do consumo anual total nacional (total_gwh) de 2021 a 2025, cor #0072B2.\n- Painel esquerdo, título 'Contraexemplo: eixo truncado (distorce as magnitudes)': ax.set_ylim(0.97 * total.min(), 1.01 * total.max()).\n- Painel direito, título 'Correto: eixo a partir de zero': ax.set_ylim(0, total.max() * 1.15).\nOs dois painéis têm o rótulo y 'Consumo anual (GWh)' e os anos no eixo x. Em cada painel, uma caixa de texto no canto superior com a 'razão visual' = (altura visível da maior barra) / (altura visível da menor barra), calculada com o limite inferior do eixo (ymin): (max - ymin) / (min - ymin), e a 'razão real' = max / min (2 casas decimais, sufixo 'x', vírgula decimal). Título geral (fig.suptitle): 'Princípio da tinta proporcional: a altura da barra tem de ser proporcional ao valor'.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 93
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    }
+  ]
+}

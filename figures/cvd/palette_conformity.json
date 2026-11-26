@@ -1,0 +1,165 @@
+[
+  {
+    "paleta": "PuOr (diverging)",
+    "tipo": "divergente",
+    "criterio": "ΔE entre extremos",
+    "resultados": {
+      "normal": {
+        "valor": 53.4,
+        "ok": true
+      },
+      "deuteranopia": {
+        "valor": 57.2,
+        "ok": true
+      },
+      "protanopia": {
+        "valor": 52.8,
+        "ok": true
+      }
+    },
+    "figuras": [
+      "p1f1_divergente_variacao"
+    ],
+    "estado": "CONFORME"
+  },
+  {
+    "paleta": "viridis (sequential)",
+    "tipo": "sequencial",
+    "criterio": "|ρ| luminosidade vs posição",
+    "resultados": {
+      "normal": {
+        "valor": 1.0,
+        "ok": true
+      },
+      "deuteranopia": {
+        "valor": 1.0,
+        "ok": true
+      },
+      "protanopia": {
+        "valor": 1.0,
+        "ok": true
+      }
+    },
+    "figuras": [
+      "p1f1_heatmap_sequencial",
+      "p1f2_concelho_mes",
+      "p2f2_sobreposicao"
+    ],
+    "estado": "CONFORME"
+  },
+  {
+    "paleta": "hex: #0072B2 #009E73 #CC79A7 #D55E00 #E69F00",
+    "tipo": "qualitativa (hex)",
+    "criterio": "ΔE mínimo entre cores",
+    "resultados": {
+      "normal": {
+        "valor": 21.6,
+        "ok": true,
+        "par_critico": [
+          "#D55E00",
+          "#E69F00"
+        ]
+      },
+      "deuteranopia": {
+        "valor": 14.8,
+        "ok": true,
+        "par_critico": [
+          "#009E73",
+          "#CC79A7"
+        ]
+      },
+      "protanopia": {
+        "valor": 14.0,
+        "ok": true,
+        "par_critico": [
+          "#0072B2",
+          "#CC79A7"
+        ]
+      }
+    },
+    "figuras": [
+      "p1f1_scatter_escalas",
+      "p1f2_concelhos",
+      "p1f2_dist_distrito",
+      "p1f2_dist_regiao",
+      "p1f2_distritos",
+      "p1f2_forma_regiao",
+      "p1f2_regiao",
+      "p1f2_treemap",
+      "p2f1_regioes_indice",
+      "p2f1_scatter_correlacao"
+    ],
+    "estado": "CONFORME"
+  },
+  {
+    "paleta": "hex: #0072B2 #D55E00",
+    "tipo": "qualitativa (hex)",
+    "criterio": "ΔE mínimo entre cores",
+    "resultados": {
+      "normal": {
+        "valor": 62.4,
+        "ok": true,
+        "par_critico": [
+          "#0072B2",
+          "#D55E00"
+        ]
+      },
+      "deuteranopia": {
+        "valor": 56.2,
+        "ok": true,
+        "par_critico": [
+          "#0072B2",
+          "#D55E00"
+        ]
+      },
+      "protanopia": {
+        "valor": 49.1,
+        "ok": true,
+        "par_critico": [
+          "#0072B2",
+          "#D55E00"
+        ]
+      }
+    },
+    "figuras": [
+      "p1f2_hist_total",
+      "p2f1_serie_nacional"
+    ],
+    "estado": "CONFORME"
+  },
+  {
+    "paleta": "hex: #0072B2 #009E73 #D55E00",
+    "tipo": "qualitativa (hex)",
+    "criterio": "ΔE mínimo entre cores",
+    "resultados": {
+      "normal": {
+        "valor": 34.6,
+        "ok": true,
+        "par_critico": [
+          "#0072B2",
+          "#009E73"
+        ]
+      },
+      "deuteranopia": {
+        "valor": 22.6,
+        "ok": true,
+        "par_critico": [
+          "#009E73",
+          "#D55E00"
+        ]
+      },
+      "protanopia": {
+        "valor": 20.0,
+        "ok": true,
+        "par_critico": [
+          "#009E73",
+          "#D55E00"
+        ]
+      }
+    },
+    "figuras": [
+      "p2f1_comparacao_suavizacao"
+    ],
+    "estado": "CONFORME"
+  }
+]

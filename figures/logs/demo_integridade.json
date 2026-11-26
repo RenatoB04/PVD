@@ -1,0 +1,36 @@
+{
+  "name": "demo_integridade",
+  "spec": "Gráfico de barras verticais (ax.bar) do consumo anual total nacional (total_gwh) por ano. Para realçar as diferenças entre anos, define obrigatoriamente o limite inferior do eixo y como 0.95 vezes o valor mínimo: ax.set_ylim(total.min() * 0.95, total.max() * 1.02). Rótulos dos eixos em português e título informativo.",
+  "status": "approved",
+  "iteracoes": 2,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 64
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": [
+        "Linha 27: o eixo y (métrico) de um gráfico de barras não começa em zero (o limite inferior é uma expressão calculada (por exemplo, min() * 0.9) e não 0). Barras truncadas distorcem as magnitudes (Wilke, cap. 17). Define o limite inferior como 0, por exemplo ax.set_ylim(0, ...).",
+        "Esta regra de integridade (barras com eixo métrico a partir de zero) tem prioridade sobre a especificação."
+      ]
+    },
+    {
+      "node": "generator",
+      "iteration": 2,
+      "linhas": 64
+    },
+    {
+      "node": "validator",
+      "iteration": 2,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 2,
+      "issues": []
+    }
+  ]
+}

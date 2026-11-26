@@ -1,0 +1,30 @@
+{
+  "name": "p2f2_barras_anual",
+  "spec": "Gráfico de barras verticais (ax.bar) do consumo anual total nacional (total_gwh) de 2021 a 2025 (5 anos completos), figsize (10, 6.5), cor única #0072B2. O eixo y (métrico) começa obrigatoriamente em zero: ax.set_ylim(0, total.max() * 1.15). Rótulo do eixo y 'Consumo anual (GWh)'; eixo x com os anos como texto e rótulo 'Ano'. Escrever o valor de cada barra acima dela (GWh, sem casas decimais, separador de milhares por espaço: f\"{v:,.0f}\".replace(\",\", \" \")). Dentro de cada barra, junto ao topo e a branco, a variação face ao ano anterior (var_pct, 1 casa decimal, sinal explícito, vírgula decimal) para 2022 a 2025; 2021 sem variação. Título 'Consumo anual de eletricidade em Portugal continental, 2021–2025'. Nota no rodapé (fig.text, fontsize 9, cinzento): 'Anos completos; 2020 e 2026 excluídos por estarem incompletos. Eixo vertical a partir de zero.' Sem legenda e sem grelha vertical.",
+  "status": "approved",
+  "iteracoes": 1,
+  "eventos": [
+    {
+      "node": "generator",
+      "iteration": 1,
+      "linhas": 83
+    },
+    {
+      "node": "validator",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "executor",
+      "iteration": 1,
+      "issues": []
+    },
+    {
+      "node": "critic",
+      "iteration": 1,
+      "approved": true,
+      "severe": [],
+      "minor": []
+    }
+  ]
+}
